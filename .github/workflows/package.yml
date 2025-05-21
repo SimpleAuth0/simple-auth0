@@ -1,0 +1,64 @@
+# .github/workflows/package.yml
+name: Build Offline Installer
+
+on:
+  push:
+    tags:
+      - 'v*'  # 仅当发布 tag 时触发
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Build Spring Boot app
+        run: ./gradlew clean bootJar
+
+      - name: Prepare folders
+        run: |
+          mkdir -p dist/{app,redis,jdk}
+          cp build/libs/*.jar dist/app/
+
+      - name: Download Redis
+        run: |
+          curl -L -o redis.tar.gz https://download.redis.io/releases/redis-7.2.4.tar.gz
+          tar -xzf redis.tar.gz
+          mv redis-7.2.4 dist/redis
+
+      - name: Download JDK
+        run: |
+          curl -L -o jdk.tar.gz https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz
+          tar -xzf jdk.tar.gz
+          mv jdk-17* dist/jdk
+
+      - name: Create start script
+        run: |
+          echo '#!/bin/bash' > dist/start.sh
+          echo 'cd $(dirname $0)' >> dist/start.sh
+          echo 'echo "Starting Redis..."' >> dist/start.sh
+          echo './redis/src/redis-server &' >> dist/start.sh
+          echo 'echo "Starting Spring App..."' >> dist/start.sh
+          echo './jdk/bin/java -jar app/*.jar' >> dist/start.sh
+          chmod +x dist/start.sh
+
+      - name: Package installer
+        run: |
+          cd dist
+          tar -czf ../spring-offline-installer.tar.gz .
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: spring-offline-installer.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
