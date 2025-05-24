@@ -1,0 +1,33 @@
+ext.pluginVersions = [:]
+ext.pluginAliases = [:]
+
+// ==============================
+// ✅ Plugin Versions
+// ==============================
+
+pluginVersions.springBoot = "2.7.18"
+pluginVersions.springDependencyManagement = "1.0.15.RELEASE"
+pluginVersions.kotlin = "1.9.23"
+pluginVersions.sonarqube = "6.0.1.5171"
+pluginVersions.spotless = "6.25.0"
+pluginVersions.lombok = "8.6"
+pluginVersions.jacoco = "0.8.11"
+pluginVersions.openapi = "2.6.0"
+pluginVersions.docker = "9.3.4"
+pluginVersions.versions = "0.51.0"
+
+// ==============================
+// ✅ Plugin Aliases (for use in `plugins` block)
+// ==============================
+
+pluginAliases.springBoot = "org.springframework.boot"
+pluginAliases.springDependencyManagement = "io.spring.dependency-management"
+pluginAliases.kotlinJvm = "org.jetbrains.kotlin.jvm"
+pluginAliases.kotlinSpring = "org.jetbrains.kotlin.plugin.spring"
+pluginAliases.sonarqube = "org.sonarqube"
+pluginAliases.spotless = "com.diffplug.spotless"
+pluginAliases.lombok = "io.freefair.lombok"
+pluginAliases.jacoco = "jacoco"
+pluginAliases.openapi = "org.springdoc.openapi-gradle-plugin"
+pluginAliases.docker = "com.bmuschko.docker-spring-boot-application"
+pluginAliases.versions = "com.github.ben-manes.versions"

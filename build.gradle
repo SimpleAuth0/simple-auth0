@@ -4,6 +4,9 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
+apply from: "dependencies.gradle"
+apply from: "plugins.gradle"
+
 group = 'io.github.relive27'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '8'
@@ -16,73 +19,60 @@ configurations {
 
 allprojects {
     group = '${group}'
-    version = '0.0.1-SNAPSHOT'
+    version = '${version}'
+
+    apply plugin: pluginAliases.springDependencyManagement
 
     repositories {
         mavenCentral()
     }
 }
 
-ext {
-    set('springCloudVersion', "2021.0.9")
-}
-
 subprojects {
     apply plugin: 'java'
-    apply plugin:  'org.springframework.boot'
-    apply plugin:  'io.spring.dependency-management'
+    apply plugin: pluginAliases.springBoot
+    apply plugin: pluginAliases.springDependencyManagement
 
     dependencies {
-            testImplementation 'org.springframework.boot:spring-boot-starter-test'
-            testImplementation 'com.unboundid:unboundid-ldapsdk'
-            testImplementation 'com.h2database:h2'
-            testImplementation 'org.springframework.amqp:spring-rabbit-test'
-            testImplementation 'org.springframework.security:spring-security-test'
-            testImplementation 'com.tngtech.archunit:archunit:1.0.1'
-            testImplementation 'com.tngtech.archunit:archunit-junit5:1.0.1'
+        compileOnly libraries.lombok
+        testImplementation libraries.springBootStarterTest
+        testImplementation libraries.archunit
     }
-}
-dependencies {
-    implementation 'org.springframework.cloud:spring-cloud-starter-consul-config'
-    implementation 'org.springframework.cloud:spring-cloud-starter-consul-discovery'
-    implementation 'org.springframework.cloud:spring-cloud-starter-vault-config'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-amqp'
-    implementation 'org.springframework.boot:spring-boot-starter-cache'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-    implementation 'org.springframework.boot:spring-boot-starter-data-ldap'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    implementation 'org.springframework.boot:spring-boot-starter-mail'
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
-    implementation 'org.springframework.boot:spring-boot-starter-quartz'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-websocket'
-    implementation 'org.flywaydb:flyway-core'
-    implementation 'org.flywaydb:flyway-mysql'
-    implementation 'com.baomidou:mybatis-plus-boot-starter:3.5.3.1'
-    compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'com.mysql:mysql-connector-j'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'com.unboundid:unboundid-ldapsdk'
-    testImplementation 'com.h2database:h2'
-    testImplementation 'org.springframework.amqp:spring-rabbit-test'
-    testImplementation 'org.springframework.security:spring-security-test'
-    testImplementation 'com.tngtech.archunit:archunit:1.0.1'
-    testImplementation 'com.tngtech.archunit:archunit-junit5:1.0.1'
+
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
 }
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${versions.springCloud}"
+    }
+
+    dependencies {
+        // ✅ 统一声明依赖库
+        dependency libraries.springBootStarterWeb
+        dependency libraries.springBootStarterAop
+        dependency libraries.springBootStarterSecurity
+        dependency libraries.springBootStarterOauth2ResourceServer
+        dependency libraries.springBootStarterOauth2Client
+        dependency libraries.springAuthorizationServer
+        dependency libraries.springSecurityCasClient
+        dependency libraries.jacksonDatabind
+        dependency libraries.jacksonKotlin
+
+        dependency libraries.guava
+        dependency libraries.commonsLang3
+
+        dependency libraries.opensaml
+
+        dependency libraries.slf4jApi
+
+        dependency libraries.jsonPath
+        dependency libraries.selenium
+
+        dependency libraries.tomcatCargo
     }
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
-}
+
