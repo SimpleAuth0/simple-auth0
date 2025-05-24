@@ -1,10 +1,48 @@
 rootProject.name = 'simple-auth0'
-include 'core'
-include 'portal'
-include 'oauth2'
-include 'saml'
-include 'cas'
-include 'ldap'
-include 'security'
-include 'admin'
+include(":core")
+project(':core').projectDir = file('core')
+project(':core').name = 'simpleauth0-core'
 
+include (':oauth2')
+project(':oauth2').projectDir = file('oauth2')
+project(':oauth2').name = 'simpleauth0-oauth2'
+
+include (':saml')
+project(':saml').projectDir = file('saml')
+project(':saml').name = 'simpleauth0-saml'
+
+include (':cas')
+project(':cas').projectDir = file('cas')
+project(':cas').name = 'simpleauth0-cas'
+
+include (':ldap')
+project(':ldap').projectDir = file('ldap')
+project(':ldap').name = 'simpleauth0-ldap'
+
+include (':server')
+project(':server').projectDir = file('server')
+project(':server').name = 'simpleauth0-server'
+
+include (':extensions')
+project(':extensions').projectDir = file('extensions')
+project(':extensions').name = 'simpleauth0-extensions'
+
+include (':audit')
+project(':audit').projectDir = file('audit')
+project(':audit').name = 'simpleauth0-audit'
+
+include (':tests')
+project(':tests').projectDir = file('tests')
+project(':tests').name = 'simpleauth0-tests'
+
+include (':crypto')
+project(':crypto').projectDir = file('crypto')
+project(':crypto').name = 'simpleauth0-crypto'
+
+include (':repository')
+project(':repository').projectDir = file('repository')
+project(':repository').name = 'simpleauth0-repository'
+
+include(':security')
+project(':security').projectDir = file('security')
+project(':security').name = 'simpleauth0-security'

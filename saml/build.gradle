@@ -1,25 +1,9 @@
-plugins {
-    id 'java'
-}
-
-group 'io.github.relive27'
-version '0.0.1-SNAPSHOT'
-
 jar {
     archiveBaseName = 'simpleauth0-saml'
     archiveVersion = version
     archiveExtension = 'jar'
 }
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
-}
-
-test {
-    useJUnitPlatform()
+    implementation project(':simpleauth0-core')
 }

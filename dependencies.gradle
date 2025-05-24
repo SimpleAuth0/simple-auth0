@@ -1,0 +1,93 @@
+ext {
+    versions = [:]
+    libraries = [:]
+}
+
+// ==============================
+// ✅ Versions
+// ==============================
+versions.springBoot = "2.7.18"
+versions.springAuthorizationServer = "0.4.0"
+versions.springCloud = "2021.0.8"
+versions.springSecurity = "5.7.5"
+
+versions.mybatisPlus = "3.5.3.1"
+
+versions.mysql = "8.0.33"
+
+versions.flyway = "5.2.4"
+
+versions.jackson = "2.17.0"
+versions.guava = "32.1.2-jre"
+versions.apacheCommonsLang = "3.14.0"
+
+versions.slf4j = "1.7.36"
+versions.logback = "1.2.13"
+
+versions.junit = "5.10.2"
+versions.mockito = "5.12.0"
+versions.archunit = "1.0.1"
+
+versions.jsonPath = "2.8.0"
+versions.selenium = "4.20.0"
+
+versions.opensaml = "4.2.0"
+
+versions.tomcatCargo = "9.0.86"
+
+versions.lombok = "1.18.26"
+
+// ==============================
+// ✅ Libraries
+// ==============================
+
+// Spring
+libraries.springBootStarterWeb = "org.springframework.boot:spring-boot-starter-web:${versions.springBoot}"
+libraries.springBootStarterJdbc = "org.springframework.boot:spring-boot-starter-data-jdbc:${versions.springBoot}"
+libraries.springBootStarterCache = "org.springframework.boot:spring-boot-starter-cache:${versions.springBoot}"
+libraries.springBootStarterRedis = "org.springframework.boot:spring-boot-starter-data-redis:${versions.springBoot}"
+libraries.springBootStarterSecurity = "org.springframework.boot:spring-boot-starter-security:${versions.springBoot}"
+libraries.springBootStarterOauth2ResourceServer = "org.springframework.boot:spring-boot-starter-oauth2-resource-server:${versions.springBoot}"
+libraries.springBootStarterOauth2Client = "org.springframework.boot:spring-boot-starter-oauth2-client:${versions.springBoot}"
+libraries.springAuthorizationServer = "org.springframework.security:spring-security-oauth2-authorization-server:${versions.springAuthorizationServer}"
+libraries.springSecurityCasClient = "org.springframework.security:spring-security-cas-client:${versions.springSecurity}"
+libraries.springBootStarterAop = "org.springframework.boot:spring-boot-starter-aop:${versions.springBoot}"
+libraries.springBootStarterTest = "org.springframework.boot:spring-boot-starter-test:${versions.springBoot}"
+
+// Mybatis / MybatisPlus
+libraries.mybatisPlus = "com.baomidou:mybatis-plus-boot-starter:${versions.mybatisPlus}"
+libraries.mybatisPlusTest = "com.baomidou:mybatis-plus-boot-starter-test:${versions.mybatisPlus}"
+
+// Mysql
+libraries.mysql = "com.mysql:mysql-connector-j:${versions.mysql}"
+
+// Flyway
+libraries.flyway = "org.flywaydb:flyway-core:${versions.flyway}"
+libraries.flywayMysql = "org.flywaydb:flyway-mysql:${versions.flyway}"
+
+// Jackson / JSON
+libraries.jacksonDatabind = "com.fasterxml.jackson.core:jackson-databind:${versions.jackson}"
+libraries.jacksonKotlin = "com.fasterxml.jackson.module:jackson-module-kotlin:${versions.jackson}"
+
+// Apache / Google
+libraries.guava = "com.google.guava:guava:${versions.guava}"
+libraries.commonsLang3 = "org.apache.commons:commons-lang3:${versions.apacheCommonsLang}"
+
+// Security / Encryption
+libraries.opensaml = "org.opensaml:opensaml-core:${versions.opensaml}"
+
+// Logging
+libraries.slf4jApi = "org.slf4j:slf4j-api:${versions.slf4j}"
+
+// Testing
+libraries.archunit = "com.tngtech.archunit:archunit:${versions.archunit}"
+
+// Web Testing
+libraries.jsonPath = "com.jayway.jsonpath:json-path:${versions.jsonPath}"
+libraries.selenium = "org.seleniumhq.selenium:selenium-java:${versions.selenium}"
+
+// Tomcat Cargo for integration tests
+libraries.tomcatCargo = "org.codehaus.cargo:cargo-core-container-tomcat:${versions.tomcatCargo}"
+
+// lombok
+libraries.lombok = "org.projectlombok:lombok:${versions.lombok}"

@@ -1,10 +1,10 @@
 jar {
-    archiveBaseName = 'simpleauth0-cas'
+    archiveBaseName = 'simpleauth0-audit'
     archiveVersion = version
     archiveExtension = 'jar'
 }
 
 dependencies {
-    implementation libraries.springSecurityCasClient
+    implementation libraries.springBootStarterAop
     implementation project(':simpleauth0-core')
 }
