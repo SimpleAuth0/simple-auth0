@@ -11,6 +11,8 @@ versions.springAuthorizationServer = "0.4.0"
 versions.springCloud = "2021.0.8"
 versions.springSecurity = "5.7.5"
 
+versions.nimbusJoseJwt = "10.3"
+
 versions.mybatisPlus = "3.5.3.1"
 
 versions.mysql = "8.0.33"
@@ -50,9 +52,13 @@ libraries.springBootStarterSecurity = "org.springframework.boot:spring-boot-star
 libraries.springBootStarterOauth2ResourceServer = "org.springframework.boot:spring-boot-starter-oauth2-resource-server:${versions.springBoot}"
 libraries.springBootStarterOauth2Client = "org.springframework.boot:spring-boot-starter-oauth2-client:${versions.springBoot}"
 libraries.springAuthorizationServer = "org.springframework.security:spring-security-oauth2-authorization-server:${versions.springAuthorizationServer}"
-libraries.springSecurityCasClient = "org.springframework.security:spring-security-cas-client:${versions.springSecurity}"
+libraries.springSecurityCas = "org.springframework.security:spring-security-cas:${versions.springSecurity}"
 libraries.springBootStarterAop = "org.springframework.boot:spring-boot-starter-aop:${versions.springBoot}"
+libraries.springBootStarterMail = "org.springframework.boot:spring-boot-starter-mail:${versions.springBoot}"
 libraries.springBootStarterTest = "org.springframework.boot:spring-boot-starter-test:${versions.springBoot}"
+
+//jwt
+libraries.nimbusJoseJwt = "com.nimbusds:nimbus-jose-jwt:${versions.numbusJoseJwt}"
 
 // Mybatis / MybatisPlus
 libraries.mybatisPlus = "com.baomidou:mybatis-plus-boot-starter:${versions.mybatisPlus}"

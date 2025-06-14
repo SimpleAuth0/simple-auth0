@@ -57,9 +57,11 @@ dependencyManagement {
         dependency libraries.springBootStarterOauth2ResourceServer
         dependency libraries.springBootStarterOauth2Client
         dependency libraries.springAuthorizationServer
-        dependency libraries.springSecurityCasClient
+        dependency libraries.springSecurityCas
+        dependency libraries.springBootStarterMail
         dependency libraries.jacksonDatabind
         dependency libraries.jacksonKotlin
+        dependency libraries.nimbusJoseJwt
 
         dependency libraries.guava
         dependency libraries.commonsLang3

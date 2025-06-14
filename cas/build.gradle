@@ -5,6 +5,6 @@ jar {
 }
 
 dependencies {
-    implementation libraries.springSecurityCasClient
+    implementation libraries.springSecurityCas
     implementation project(':simpleauth0-core')
 }
