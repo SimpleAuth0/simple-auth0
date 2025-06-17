@@ -4,11 +4,8 @@ import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
-import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author: ReLive27
@@ -17,46 +14,58 @@ import java.io.InputStreamReader;
 public class RepeatedlyRequestWrapper extends HttpServletRequestWrapper {
     private final byte[] body;
 
-    public RepeatedlyRequestWrapper(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public RepeatedlyRequestWrapper(HttpServletRequest request) throws IOException {
         super(request);
         request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        body = request.getReader().readLine().getBytes("UTF-8");
+        this.body = readBody(request);
+    }
+
+    private byte[] readBody(HttpServletRequest request) throws IOException {
+        try (InputStream is = request.getInputStream();
+             ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            byte[] buffer = new byte[1024];
+            int len;
+            while ((len = is.read(buffer)) != -1) {
+                baos.write(buffer, 0, len);
+            }
+            return baos.toByteArray();
+        }
     }
 
     @Override
-    public BufferedReader getReader() throws IOException {
-        return new BufferedReader(new InputStreamReader(getInputStream()));
+    public BufferedReader getReader() {
+        return new BufferedReader(new InputStreamReader(getInputStream(), StandardCharsets.UTF_8));
     }
 
     @Override
-    public ServletInputStream getInputStream() throws IOException {
+    public ServletInputStream getInputStream() {
         final ByteArrayInputStream bais = new ByteArrayInputStream(body);
+
         return new ServletInputStream() {
             @Override
-            public int read() throws IOException {
-                return bais.read();
-            }
-
-            @Override
-            public int available() throws IOException {
-                return body.length;
-            }
-
-            @Override
             public boolean isFinished() {
-                return false;
+                return bais.available() == 0;
             }
 
             @Override
             public boolean isReady() {
-                return false;
+                return true;
             }
 
             @Override
             public void setReadListener(ReadListener readListener) {
+                // 不支持异步读取
+                throw new UnsupportedOperationException();
+            }
 
+            @Override
+            public int read() {
+                return bais.read();
             }
         };
+    }
+
+    public String getBodyString() {
+        return new String(body, StandardCharsets.UTF_8);
     }
 }
