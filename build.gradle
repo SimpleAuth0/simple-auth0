@@ -35,6 +35,7 @@ subprojects {
 
     dependencies {
         compileOnly libraries.lombok
+        annotationProcessor libraries.lombok
         testImplementation libraries.springBootStarterTest
         testImplementation libraries.archunit
     }

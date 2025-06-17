@@ -1,6 +1,5 @@
 package io.github.simpleauth0.security.handler;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -12,10 +11,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.UUID;
 
 /**
  * @author: ReLive27
- * @date: 2025/5/25 20:49
+ * @date: 2025/5/25 20:57
  */
 public class CompositeLoginAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
     private HttpMessageConverter<Object> httpMessageConverter = new MappingJackson2HttpMessageConverter();
@@ -23,7 +24,6 @@ public class CompositeLoginAuthenticationSuccessHandler implements Authenticatio
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         ServletServerHttpResponse httpResponse = new ServletServerHttpResponse(response);
-        httpResponse.setStatusCode(HttpStatus.UNAUTHORIZED);
-        this.httpMessageConverter.write("unauthorized", MediaType.APPLICATION_JSON, httpResponse);
+        this.httpMessageConverter.write(Collections.singletonMap("token", UUID.randomUUID().toString()), MediaType.APPLICATION_JSON, httpResponse);
     }
 }

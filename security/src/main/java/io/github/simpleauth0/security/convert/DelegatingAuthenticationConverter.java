@@ -6,8 +6,6 @@ import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.util.Assert;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
@@ -31,8 +29,7 @@ public class DelegatingAuthenticationConverter implements AuthenticationConverte
     @Override
     public Authentication convert(HttpServletRequest request) {
         Assert.notNull(request, "request cannot be null");
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        RepeatedlyRequestWrapper requestWrapper = new RepeatedlyRequestWrapper(request, attributes.getResponse());
+        RepeatedlyRequestWrapper requestWrapper = new RepeatedlyRequestWrapper(request);
         for (AuthenticationConverter converter : this.converters) {
             Authentication authentication = converter.convert(requestWrapper);
             if (authentication != null) {

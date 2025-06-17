@@ -5,6 +5,7 @@ import io.github.simpleauth0.security.AuthenticationTypeRepository;
 import io.github.simpleauth0.security.CompositeLoginAuthenticationFilter;
 import io.github.simpleauth0.security.convert.DelegatingAuthenticationConverter;
 import io.github.simpleauth0.security.convert.UsernamePasswordAuthenticationConvert;
+import io.github.simpleauth0.security.handler.CompositeLoginAuthenticationFailureHandler;
 import io.github.simpleauth0.security.handler.CompositeLoginAuthenticationSuccessHandler;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -17,12 +18,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.Assert;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,8 +38,8 @@ public class CompositeLoginAuthenticationConfigurer extends AbstractHttpConfigur
     private RequestMatcher endpointsMatcher = DEFAULT_ANT_PATH_REQUEST_MATCHER;
     private AuthenticationSuccessHandler successHandler;
     private AuthenticationFailureHandler failureHandler;
-    private List<AuthenticationConverter> authenticationConverterList;
-    private List<AuthenticationProvider> authenticationProviders;
+    private List<AuthenticationConverter> authenticationConverterList = new ArrayList<>();
+    private List<AuthenticationProvider> authenticationProviders = new ArrayList<>();
     private final Map<Class<? extends AbstractAuthenticationConfigurer>, AbstractAuthenticationConfigurer> configurers = createConfigurers();
 
 
@@ -102,7 +103,7 @@ public class CompositeLoginAuthenticationConfigurer extends AbstractHttpConfigur
         loginAuthenticationFilter.setAuthenticationSuccessHandler(this.successHandler);
 
         if (this.failureHandler == null) {
-            this.failureHandler = new SimpleUrlAuthenticationFailureHandler();
+            this.failureHandler = new CompositeLoginAuthenticationFailureHandler();
         }
         loginAuthenticationFilter.setAuthenticationFailureHandler(this.failureHandler);
 
