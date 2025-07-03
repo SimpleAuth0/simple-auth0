@@ -6,4 +6,7 @@ jar {
 
 dependencies {
     implementation project(':simpleauth0-core')
+    implementation project(':simpleauth0-security')
+    implementation project(':simpleauth0-repository')
+    implementation libraries.springBootStarterWeb
 }

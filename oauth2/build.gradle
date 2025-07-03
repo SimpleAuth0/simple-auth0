@@ -6,4 +6,6 @@ jar {
 
 dependencies {
     implementation project(':simpleauth0-core')
+    implementation libraries.springAuthorizationServer
+    implementation libraries.springBootStarterOauth2Client
 }
