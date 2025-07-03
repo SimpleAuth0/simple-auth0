@@ -8,5 +8,6 @@ dependencies {
     implementation libraries.springBootStarterWeb
     implementation libraries.springBootStarterSecurity
     implementation libraries.springSecurityJose
+    implementation libraries.commonsIO
 
 }

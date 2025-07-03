@@ -22,6 +22,7 @@ versions.flyway = "5.2.4"
 versions.jackson = "2.17.0"
 versions.guava = "32.1.2-jre"
 versions.apacheCommonsLang = "3.14.0"
+versions.apacheCommonsIO = "2.19.0"
 
 versions.slf4j = "1.7.36"
 versions.logback = "1.2.13"
@@ -79,6 +80,7 @@ libraries.jacksonKotlin = "com.fasterxml.jackson.module:jackson-module-kotlin:${
 // Apache / Google
 libraries.guava = "com.google.guava:guava:${versions.guava}"
 libraries.commonsLang3 = "org.apache.commons:commons-lang3:${versions.apacheCommonsLang}"
+libraries.commonsIO = "commons-io:commons-io:${versions.apacheCommonsIO}"
 
 // Security / Encryption
 libraries.opensaml = "org.opensaml:opensaml-core:${versions.opensaml}"
