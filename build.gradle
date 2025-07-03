@@ -67,6 +67,7 @@ dependencyManagement {
 
         dependency libraries.guava
         dependency libraries.commonsLang3
+        dependency libraries.commonsIO
 
         dependency libraries.opensaml
 
