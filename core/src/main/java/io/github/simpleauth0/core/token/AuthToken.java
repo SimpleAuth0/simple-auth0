@@ -45,5 +45,14 @@ public abstract class AuthToken {
     public Instant getExpiresAt() {
         return this.expiresAt;
     }
+
+    public String toJSONString() {
+        return "{" +
+                "\"tokenValue\":\"" + tokenValue + "\"" +
+                ", \"tokenType\":\"" + tokenType + '\"' +
+                ", \"issuedAt\":" + issuedAt.getEpochSecond() +
+                ", \"expiresAt\":" + expiresAt.getEpochSecond() +
+                '}';
+    }
 }
 

@@ -1,2 +1,6 @@
 server:
   port: 9095
+simpleauth0:
+  token:
+    opaque:
+      format: base64

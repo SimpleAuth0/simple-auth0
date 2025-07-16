@@ -8,6 +8,7 @@ dependencies {
     implementation libraries.springBootStarterWeb
     implementation libraries.springBootStarterSecurity
     implementation libraries.springSecurityJose
+    annotationProcessor libraries.springBootConfigurationProcessor
     implementation libraries.commonsIO
 
 }

@@ -2,7 +2,7 @@ package io.github.simpleauth0.core.token;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
+import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.util.Assert;
 
@@ -38,7 +38,7 @@ public class JwtTokenGenerator implements TokenGenerator<JwtToken> {
                         .map(GrantedAuthority::getAuthority).collect(Collectors.toSet()))
                 .claim(JwtClaimNames.JTI, UUID.randomUUID().toString());
 
-        JwsHeader.Builder headersBuilder = JwsHeader.with(SignatureAlgorithm.RS256);
+        JwsHeader.Builder headersBuilder = JwsHeader.with(MacAlgorithm.HS256);
 
         if (this.tokenCustomizer != null) {
             JwtTokenContext jwtTokenContext = JwtTokenContext.with(headersBuilder, claimsBuilder)

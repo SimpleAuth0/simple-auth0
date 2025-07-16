@@ -1,6 +1,7 @@
 package io.github.simpleauth0.core;
 
 import io.github.simpleauth0.core.jose.key.KeySource;
+import io.github.simpleauth0.core.token.OpaqueTokenFormat;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -16,10 +17,6 @@ public class SimpleAuth0Properties {
 
     @Data
     public class Token {
-        /**
-         * 默认过期时间（单位：秒）
-         */
-        private long expiresIn = 3600;
 
         /**
          * JWT配置
@@ -42,6 +39,12 @@ public class SimpleAuth0Properties {
          * 默认签发者
          */
         private String issuer = "simpleauth0";
+
+        /**
+         * 默认过期时间（单位：秒）
+         */
+        private long expiresIn = 3600;
+
         /**
          * 对称签名密钥
          */
@@ -66,5 +69,10 @@ public class SimpleAuth0Properties {
          * 令牌随机长度，默认 32
          */
         private int length = 32;
+
+        /**
+         * 控制令牌格式生成器
+         */
+        private OpaqueTokenFormat format = OpaqueTokenFormat.UUID;
     }
 }
