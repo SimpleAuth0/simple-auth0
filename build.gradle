@@ -60,6 +60,7 @@ dependencyManagement {
         dependency libraries.springAuthorizationServer
         dependency libraries.springSecurityCas
         dependency libraries.springBootStarterMail
+        dependency libraries.springBootConfigurationProcessor
         dependency libraries.springSecurityJose
         dependency libraries.jacksonDatabind
         dependency libraries.jacksonKotlin

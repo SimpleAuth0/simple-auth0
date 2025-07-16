@@ -13,11 +13,11 @@ import java.security.interfaces.RSAPublicKey;
  * @date: 2025/6/23 22:38
  */
 @Slf4j
-public class FileKeyLoader implements KeyLoader {
+public class FileRsaKeyLoader implements KeyLoader {
 
     private final SimpleAuth0Properties properties;
 
-    public FileKeyLoader(SimpleAuth0Properties properties) {
+    public FileRsaKeyLoader(SimpleAuth0Properties properties) {
         this.properties = properties;
     }
 

@@ -1,5 +1,6 @@
 package io.github.simpleauth0.security.configurers;
 
+import io.github.simpleauth0.core.token.TokenGenerator;
 import io.github.simpleauth0.core.utils.SecurityConfigUtils;
 import io.github.simpleauth0.security.AuthenticationTypeRepository;
 import io.github.simpleauth0.security.CompositeLoginAuthenticationFilter;
@@ -98,7 +99,8 @@ public class CompositeLoginAuthenticationConfigurer extends AbstractHttpConfigur
         AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
         CompositeLoginAuthenticationFilter loginAuthenticationFilter = new CompositeLoginAuthenticationFilter(this.endpointsMatcher, authenticationManager);
         if (successHandler == null) {
-            this.successHandler = new CompositeLoginAuthenticationSuccessHandler();
+            TokenGenerator tokenGenerator = SecurityConfigUtils.getOptionalBean(http, TokenGenerator.class);
+            this.successHandler = new CompositeLoginAuthenticationSuccessHandler(tokenGenerator);
         }
         loginAuthenticationFilter.setAuthenticationSuccessHandler(this.successHandler);
 

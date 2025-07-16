@@ -56,6 +56,7 @@ libraries.springAuthorizationServer = "org.springframework.security:spring-secur
 libraries.springSecurityCas = "org.springframework.security:spring-security-cas:${versions.springSecurity}"
 libraries.springBootStarterAop = "org.springframework.boot:spring-boot-starter-aop:${versions.springBoot}"
 libraries.springBootStarterMail = "org.springframework.boot:spring-boot-starter-mail:${versions.springBoot}"
+libraries.springBootConfigurationProcessor = "org.springframework.boot:spring-boot-configuration-processor:${versions.springBoot}"
 libraries.springSecurityJose = "org.springframework.security:spring-security-oauth2-jose:${versions.springSecurity}"
 libraries.springBootStarterTest = "org.springframework.boot:spring-boot-starter-test:${versions.springBoot}"
 
