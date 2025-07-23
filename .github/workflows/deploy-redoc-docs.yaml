@@ -9,14 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Add execute permission to make.sh
-        run: chmod +x make.sh
-      - uses: actions/checkout@v2
       - name: Build docs
-        run: ./make.sh
+        run: ./docs/make.sh
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           publish_dir: ./docs
           force_orphan: false
+          exclude_assets: 'make.sh'
