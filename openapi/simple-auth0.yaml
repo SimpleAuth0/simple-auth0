@@ -1,0 +1,29 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: http://localhost:9095
+    description: Generated server url
+paths:
+  /api/userinfo:
+    get:
+      tags:
+        - user-controller
+      summary: 获取当前用户信息
+      operationId: userInfo
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+      security:
+        - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
