@@ -11,6 +11,8 @@ versions.springAuthorizationServer = "0.4.0"
 versions.springCloud = "2021.0.8"
 versions.springSecurity = "5.7.5"
 
+versions.springdocOpenAPI = "1.6.15"
+
 versions.nimbusJoseJwt = "10.3"
 
 versions.mybatisPlus = "3.5.3.1"
@@ -59,6 +61,9 @@ libraries.springBootStarterMail = "org.springframework.boot:spring-boot-starter-
 libraries.springBootConfigurationProcessor = "org.springframework.boot:spring-boot-configuration-processor:${versions.springBoot}"
 libraries.springSecurityJose = "org.springframework.security:spring-security-oauth2-jose:${versions.springSecurity}"
 libraries.springBootStarterTest = "org.springframework.boot:spring-boot-starter-test:${versions.springBoot}"
+
+//openAPI
+libraries.springdocOpenAPI = "org.springdoc:springdoc-openapi-ui:${versions.springdocOpenAPI}"
 
 //jwt
 libraries.nimbusJoseJwt = "com.nimbusds:nimbus-jose-jwt:${versions.numbusJoseJwt}"
