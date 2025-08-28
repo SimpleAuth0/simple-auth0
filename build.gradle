@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'java-library'
     id 'org.springframework.boot' version '2.7.18'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
@@ -30,6 +31,7 @@ allprojects {
 
 subprojects {
     apply plugin: 'java'
+    apply plugin: 'java-library'
     apply plugin: pluginAliases.springBoot
     apply plugin: pluginAliases.springDependencyManagement
 
@@ -66,9 +68,12 @@ dependencyManagement {
         dependency libraries.jacksonKotlin
         dependency libraries.nimbusJoseJwt
 
+        dependency libraries.springdocOpenAPI
         dependency libraries.guava
         dependency libraries.commonsLang3
         dependency libraries.commonsIO
+
+        dependency libraries.mybatisPlus
 
         dependency libraries.opensaml
 
