@@ -10,7 +10,7 @@ public class IPUtils {
 
     private static final String UNKNOWN = "unknown";
 
-    public String getIpAddress(HttpServletRequest request) {
+    public static String getIpAddress(HttpServletRequest request) {
         String ipAddress = request.getHeader("X-Forwarded-For");
         if (ipAddress == null || ipAddress.isEmpty() || UNKNOWN.equalsIgnoreCase(ipAddress)) {
             ipAddress = request.getHeader("Proxy-Client-IP");

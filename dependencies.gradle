@@ -42,6 +42,10 @@ versions.tomcatCargo = "9.0.86"
 
 versions.lombok = "1.18.26"
 
+versions.userAgentUtils = "1.21"
+
+versions.reactor = "3.7.12"
+
 // ==============================
 // ✅ Libraries
 // ==============================
@@ -106,3 +110,9 @@ libraries.tomcatCargo = "org.codehaus.cargo:cargo-core-container-tomcat:${versio
 
 // lombok
 libraries.lombok = "org.projectlombok:lombok:${versions.lombok}"
+
+//UserAgentUtils
+libraries.userAgentUtils = "eu.bitwalker:UserAgentUtils:${versions.userAgentUtils}"
+
+//reactor
+libraries.reactor = "io.projectreactor:reactor-core:${versions.reactor}"

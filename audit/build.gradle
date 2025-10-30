@@ -6,5 +6,8 @@ jar {
 
 dependencies {
     implementation libraries.springBootStarterAop
+    implementation libraries.springBootStarterWeb
+    implementation libraries.userAgentUtils
+    implementation libraries.reactor
     implementation project(':simpleauth0-core')
 }
