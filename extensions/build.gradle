@@ -1,9 +1,0 @@
-jar {
-    archiveBaseName = 'simpleauth0-extensions'
-    archiveVersion = version
-    archiveExtension = 'jar'
-}
-
-dependencies {
-    implementation project(':simpleauth0-core')
-}

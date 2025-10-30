@@ -278,6 +278,7 @@ CREATE TABLE `auth0_log`
     `ip_address`   varchar(45)  NOT NULL COMMENT 'IP地址',
     `device_type`  varchar(64)           DEFAULT NULL COMMENT '设备类型',
     `device_os`    varchar(64)           DEFAULT NULL COMMENT '设备系统:Linux/Mac OS/Windows',
+    `extend_info`   json                  DEFAULT NULL COMMENT '扩展信息(JSON，包含请求参数、响应体、请求方式等)',
     `success`      tinyint      NOT NULL DEFAULT '1' COMMENT '结果:0失败;1成功',
     `create_time`  datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time`  datetime              DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',

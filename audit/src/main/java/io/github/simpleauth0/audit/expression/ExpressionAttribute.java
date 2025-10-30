@@ -1,4 +1,4 @@
-package io.github.simpleauth0.core.expression;
+package io.github.simpleauth0.audit.expression;
 
 import lombok.Data;
 import org.springframework.expression.Expression;
@@ -14,7 +14,19 @@ public class ExpressionAttribute {
 
     private final Expression expression;
 
+    private Object[] args;
+
+    private String[] params;
+
     public ExpressionAttribute(Expression expression) {
         this.expression = expression;
+    }
+
+    public void setArgs(Object[] args) {
+        this.args = args;
+    }
+
+    public void setParams(String[] params) {
+        this.params = params;
     }
 }
