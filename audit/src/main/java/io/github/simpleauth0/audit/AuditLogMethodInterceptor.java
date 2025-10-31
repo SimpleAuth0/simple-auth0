@@ -1,7 +1,7 @@
 package io.github.simpleauth0.audit;
 
 import io.github.simpleauth0.audit.annotation.AuditLog;
-import io.github.simpleauth0.audit.expression.ExpressionAttribute;
+import io.github.simpleauth0.audit.expression.AuditLogExpressionAttribute;
 import io.github.simpleauth0.audit.handler.AuditLogStorageHandler;
 import io.github.simpleauth0.core.utils.AnnotationUtils;
 import org.aopalliance.aop.Advice;
@@ -36,7 +36,7 @@ public class AuditLogMethodInterceptor implements Ordered, MethodInterceptor, Po
 
     private AuditLogStorageHandler auditLogStorageHandler;
 
-    public AuditLogMethodInterceptor(AuditLogStorageHandler<? extends ExpressionAttribute> auditLogStorageHandler) {
+    public AuditLogMethodInterceptor(AuditLogStorageHandler<? extends AuditLogExpressionAttribute> auditLogStorageHandler) {
         Assert.notNull(auditLogStorageHandler, "auditLogStorageHandler cannot be null");
         this.auditLogStorageHandler = auditLogStorageHandler;
         this.pointcut = AuditLogMethodPointcuts.forAnnotations(AuditLog.class);
@@ -58,7 +58,7 @@ public class AuditLogMethodInterceptor implements Ordered, MethodInterceptor, Po
             throw e;
         } finally {
             AuditLogExpressionAttribute attribute = this.registry.getAttribute(mi);
-            if (attribute != ExpressionAttribute.NULL_ATTRIBUTE) {
+            if (attribute != AuditLogExpressionAttribute.NULL_ATTRIBUTE) {
                 String[] parameterNames = discoverer.getParameterNames(mi.getMethod());
                 if (parameterNames != null && parameterNames.length > 0) {
                     attribute.setParams(parameterNames);
@@ -130,41 +130,6 @@ public class AuditLogMethodInterceptor implements Ordered, MethodInterceptor, Po
 
     }
 
-    public static final class AuditLogExpressionAttribute extends ExpressionAttribute {
-
-        private static final AuditLogExpressionAttribute NULL_ATTRIBUTE = new AuditLogExpressionAttribute(null, null);
-
-        private final AuditLog auditLog;
-
-        private Object result;
-
-        private Boolean success;
-
-        private AuditLogExpressionAttribute(Expression expression, AuditLog auditLog) {
-            super(expression);
-            this.auditLog = auditLog;
-        }
-
-        public void setResult(Object result) {
-            this.result = result;
-        }
-
-        public void setSuccess(Boolean success) {
-            this.success = success;
-        }
-
-        public Object getResult() {
-            return result;
-        }
-
-        public Boolean getSuccess() {
-            return success;
-        }
-
-        public AuditLog getAuditLog() {
-            return auditLog;
-        }
-    }
 }
 
 
