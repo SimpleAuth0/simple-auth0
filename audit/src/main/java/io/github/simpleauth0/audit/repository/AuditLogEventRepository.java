@@ -1,6 +1,8 @@
 package io.github.simpleauth0.audit.repository;
 
-import reactor.core.publisher.Mono;
+import reactor.core.publisher.Flux;
+
+import java.util.List;
 
 /**
  * @author: ReLive27
@@ -8,6 +10,6 @@ import reactor.core.publisher.Mono;
  */
 public interface AuditLogEventRepository {
 
-    Mono<Void> save(AuditLogEvent event);
+    Flux<Integer> save(List<AuditLogEvent> auditLogEvents);
 
 }
