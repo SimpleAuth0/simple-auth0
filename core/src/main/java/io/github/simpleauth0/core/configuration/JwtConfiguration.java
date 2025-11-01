@@ -20,6 +20,7 @@ import io.github.simpleauth0.core.token.JwtToken;
 import io.github.simpleauth0.core.token.JwtTokenGenerator;
 import io.github.simpleauth0.core.token.TokenGenerator;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +29,6 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 
-import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
@@ -42,6 +42,7 @@ import java.util.UUID;
  */
 @Conditional(JwtConfiguredCondition.class)
 @Configuration(proxyBeanMethods = false)
+@EnableConfigurationProperties(SimpleAuth0Properties.class)
 public class JwtConfiguration {
 
     @Configuration(proxyBeanMethods = false)
