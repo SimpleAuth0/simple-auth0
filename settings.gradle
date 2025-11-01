@@ -23,10 +23,6 @@ include (':server')
 project(':server').projectDir = file('server')
 project(':server').name = 'simpleauth0-server'
 
-include (':extensions')
-project(':extensions').projectDir = file('extensions')
-project(':extensions').name = 'simpleauth0-extensions'
-
 include (':audit')
 project(':audit').projectDir = file('audit')
 project(':audit').name = 'simpleauth0-audit'
@@ -46,3 +42,8 @@ project(':repository').name = 'simpleauth0-repository'
 include(':security')
 project(':security').projectDir = file('security')
 project(':security').name = 'simpleauth0-security'
+
+include(':openapi')
+project(':openapi').projectDir = file('extensions/openapi')
+project(':openapi').name = 'simpleauth0-openapi'
+

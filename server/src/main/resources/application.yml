@@ -4,3 +4,11 @@ simpleauth0:
   token:
     opaque:
       format: base64
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+    enabled: ${OPENAPI_ENABLE:true}
+  swagger-ui:
+    path: /swagger-ui/index.html
+    enabled: ${OPENAPI_ENABLE:true}
