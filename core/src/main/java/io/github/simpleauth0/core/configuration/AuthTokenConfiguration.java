@@ -16,7 +16,7 @@ public class AuthTokenConfiguration {
     }
 
     @Configuration(proxyBeanMethods = false)
-    @Import(JwtConfiguredCondition.class)
+    @Import(JwtConfiguration.class)
     static class JwtConfigurer {
 
     }

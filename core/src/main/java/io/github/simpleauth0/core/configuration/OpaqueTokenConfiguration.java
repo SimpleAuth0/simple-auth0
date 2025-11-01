@@ -4,6 +4,7 @@ import io.github.simpleauth0.core.SimpleAuth0Properties;
 import io.github.simpleauth0.core.token.OpaqueToken;
 import io.github.simpleauth0.core.token.OpaqueTokenGenerator;
 import io.github.simpleauth0.core.token.TokenGenerator;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Conditional({OpaqueConfiguredCondition.class})
 @Configuration(proxyBeanMethods = false)
+@EnableConfigurationProperties(SimpleAuth0Properties.class)
 public class OpaqueTokenConfiguration {
 
     @Bean
