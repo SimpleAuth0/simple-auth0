@@ -1,0 +1,9 @@
+jar {
+    archiveBaseName = 'simpleauth0-openapi'
+    archiveVersion = version
+    archiveExtension = 'jar'
+}
+
+dependencies {
+    api libraries.springdocOpenAPI
+}
