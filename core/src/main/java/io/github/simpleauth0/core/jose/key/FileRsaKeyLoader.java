@@ -3,7 +3,6 @@ package io.github.simpleauth0.core.jose.key;
 import io.github.simpleauth0.core.SimpleAuth0Properties;
 import io.github.simpleauth0.core.utils.PemUtils;
 import lombok.extern.slf4j.Slf4j;
-import lombok.var;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
@@ -28,7 +27,7 @@ public class FileRsaKeyLoader implements KeyLoader {
 
     @Override
     public RSAPrivateKey loadPrivateKey() {
-        var location = properties.getToken().getJwt().getFile().getPrivateKeyLocation();
+        String location = properties.getToken().getJwt().getFile().getPrivateKeyLocation();
         try {
             return PemUtils.loadPrivateKey(location);
         } catch (Exception e) {
@@ -39,7 +38,7 @@ public class FileRsaKeyLoader implements KeyLoader {
 
     @Override
     public RSAPublicKey loadPublicKey() {
-        var location = properties.getToken().getJwt().getFile().getPublicKeyLocation();
+        String location = properties.getToken().getJwt().getFile().getPublicKeyLocation();
         try {
             return PemUtils.loadPublicKey(location);
         } catch (Exception e) {
