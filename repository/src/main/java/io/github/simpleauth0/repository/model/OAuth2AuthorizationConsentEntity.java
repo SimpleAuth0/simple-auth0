@@ -11,7 +11,7 @@ import java.util.Date;
  */
 @Data
 @TableName("auth0_oauth2_authorization_consent")
-public class OAuth2AuthorizationConsent {
+public class OAuth2AuthorizationConsentEntity {
     private String registeredClientId;
     private String principalName;
     private String authorities;

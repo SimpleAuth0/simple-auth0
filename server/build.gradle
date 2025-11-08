@@ -8,6 +8,9 @@ dependencies {
     implementation project(':simpleauth0-core')
     implementation project(':simpleauth0-security')
     implementation project(':simpleauth0-repository')
+    implementation project(':simpleauth0-audit')
     implementation project(':simpleauth0-openapi')
     implementation libraries.springBootStarterWeb
+    implementation libraries.mybatisPlus
+
 }
