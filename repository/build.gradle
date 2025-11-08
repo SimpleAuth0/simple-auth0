@@ -6,8 +6,10 @@ jar {
 
 dependencies {
     compileOnly project(':simpleauth0-security')
+    compileOnly project(':simpleauth0-audit')
     implementation project(':simpleauth0-core')
     implementation libraries.springBootStarterWeb
     implementation libraries.springBootStarterSecurity
     implementation libraries.mybatisPlus
+    implementation libraries.reactor
 }

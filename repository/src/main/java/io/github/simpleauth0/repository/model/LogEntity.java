@@ -24,6 +24,7 @@ public class LogEntity {
     private String deviceType;
     private String deviceOs;
     private int success;
+    private String extendInfo;
     private Date createTime;
     private Date updateTime;
 
