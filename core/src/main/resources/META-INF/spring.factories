@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-io.github.simpleauth0.core.configuration.AuthTokenAutoConfiguration
+io.github.simpleauth0.core.configuration.AuthTokenAutoConfiguration, \
+io.github.simpleauth0.core.i18n.MessageSourceAutoConfiguration
