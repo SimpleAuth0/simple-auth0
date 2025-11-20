@@ -13,7 +13,7 @@ public class MessageSourceAutoConfiguration {
 
     @Bean
     public MessageSource messageSource() {
-        return new SimpleAuth0MessageSource();
+        return SimpleAuth0MessageSource.getInstance();
     }
 
 }
