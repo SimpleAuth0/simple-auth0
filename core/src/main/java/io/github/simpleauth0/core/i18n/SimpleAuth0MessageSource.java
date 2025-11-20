@@ -9,13 +9,21 @@ import org.springframework.context.support.ResourceBundleMessageSource;
  */
 public class SimpleAuth0MessageSource extends ResourceBundleMessageSource {
 
-    public SimpleAuth0MessageSource() {
+    private SimpleAuth0MessageSource() {
         setBasename("io.github.simpleauth0.messages");
         setDefaultEncoding("UTF-8");
     }
 
+    public static SimpleAuth0MessageSource getInstance() {
+        return SimpleAuth0MessageSourceHolder.instance;
+    }
+
     public static MessageSourceAccessor getAccessor() {
-        return new MessageSourceAccessor(new SimpleAuth0MessageSource());
+        return new MessageSourceAccessor(getInstance());
+    }
+
+    private static class SimpleAuth0MessageSourceHolder {
+        private static SimpleAuth0MessageSource instance = new SimpleAuth0MessageSource();
     }
 }
 
