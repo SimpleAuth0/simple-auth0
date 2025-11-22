@@ -64,6 +64,8 @@ dependencyManagement {
         dependency libraries.springBootStarterMail
         dependency libraries.springBootConfigurationProcessor
         dependency libraries.springSecurityJose
+        dependency libraries.springBootStarterJdbc
+        dependency libraries.springBootStarterValidation
         dependency libraries.jacksonDatabind
         dependency libraries.jacksonKotlin
         dependency libraries.nimbusJoseJwt
@@ -74,6 +76,9 @@ dependencyManagement {
         dependency libraries.commonsIO
 
         dependency libraries.mybatisPlus
+        dependency libraries.mysql
+        dependency libraries.flyway
+        dependency libraries.flywayMysql
 
         dependency libraries.opensaml
 

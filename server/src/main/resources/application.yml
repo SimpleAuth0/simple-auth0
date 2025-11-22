@@ -1,5 +1,30 @@
 server:
-  port: 9095
+  port: ${SERVER_PORT:9095}
+  servlet:
+    context-path: /api/v1
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DATASOURCE_URL:jdbc:mysql://localhost:3306/simpleauth0?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai}
+    username: ${DATASOURCE_USERNAME:root}
+    password: ${DATASOURCE_PASSWORD:123456}
+    hikari:
+      minimum-idle: 5              # 最小空闲连接数
+      maximum-pool-size: 20        # 最大连接池大小
+      idle-timeout: 30000          # 连接空闲超时时间（毫秒）
+      max-lifetime: 1800000        # 连接最大存活时间（毫秒）
+      connection-timeout: 30000    # 获取连接的超时时间（毫秒）
+      pool-name: SimpleAuth0kariCP        # 连接池名称（可选）
+  flyway:
+    baseline-on-migrate: true
+    baseline-description: <<Flyway Baseline>>
+    enabled: true
+    locations: classpath:db/migration
+    validate-on-migrate: true
+    fail-on-missing-locations: true
+
+
 simpleauth0:
   token:
     opaque:
