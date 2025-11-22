@@ -11,6 +11,10 @@ dependencies {
     implementation project(':simpleauth0-audit')
     implementation project(':simpleauth0-openapi')
     implementation libraries.springBootStarterWeb
+    implementation libraries.springBootStarterJdbc
+    implementation libraries.springBootStarterValidation
     implementation libraries.mybatisPlus
-
+    implementation libraries.mysql
+    implementation libraries.flyway
+    implementation libraries.flywayMysql
 }
