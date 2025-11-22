@@ -11,6 +11,7 @@ public class SimpleAuth0MessageSource extends ResourceBundleMessageSource {
 
     private SimpleAuth0MessageSource() {
         setBasename("io.github.simpleauth0.messages");
+        setFallbackToSystemLocale(false);
         setDefaultEncoding("UTF-8");
     }
 
