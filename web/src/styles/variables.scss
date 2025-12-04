@@ -1,0 +1,23 @@
+// sidebar
+$menuText: #4a4a4a;                // 深灰文字（清晰）
+$menuActiveText: #1f2d3d;          // 蓝色高亮
+$subMenuActiveText: #1f2d3d;
+
+$menuBg: #f4f5f7;                  // 浅灰色主背景（非常柔和）
+$menuHover: #dcdfe6;               // hover 稍深一点(灰)"
+
+$subMenuBg: #d8dbe0;               // 子菜单略深一点，区分层级
+$subMenuHover: #cfd2d7;            // 和主菜单 hover 一致
+
+$sideBarWidth: 210px;
+
+:export {
+  menuText: $menuText;
+  menuActiveText: $menuActiveText;
+  subMenuActiveText: $subMenuActiveText;
+  menuBg: $menuBg;
+  menuHover: $menuHover;
+  subMenuBg: $subMenuBg;
+  subMenuHover: $subMenuHover;
+  sideBarWidth: $sideBarWidth;
+}
