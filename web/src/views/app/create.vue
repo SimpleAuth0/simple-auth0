@@ -37,14 +37,14 @@
     <div class="app-card-grid">
 
       <div
-        class="app-card"
         v-for="item in filteredApps"
         :key="item.id"
+        class="app-card"
         @click="selectApp(item)"
       >
         <!-- 图标 + 标题（横向） -->
         <div class="card-header">
-          <img class="card-icon" :src="item.icon"/>
+          <img class="card-icon" :src="item.icon">
           <div class="card-title">{{ item.name }}</div>
         </div>
 
@@ -55,11 +55,11 @@
 
         <!-- 技术图标 -->
         <div class="card-tech">
-          <img v-for="t in item.tech" :src="t" :key="t"/>
+          <img v-for="t in item.tech" :key="t" :src="t">
         </div>
 
         <!-- NEW 标签 -->
-        <div class="badge-new" v-if="item.new">新</div>
+        <div v-if="item.new" class="badge-new">新</div>
       </div>
 
     </div>
@@ -67,105 +67,103 @@
   </div>
 </template>
 
-
 <script>
 export default {
-  name: "AppCreatePage",
+  name: 'AppCreatePage',
 
   data() {
     return {
-      keyword: "",
-      activeTag: "全部",
+      keyword: '',
+      activeTag: '全部',
 
-      protocolTags: ["全部", "OIDC", "CAS", "SAML", "OAuth2"],
+      protocolTags: ['全部', 'OIDC', 'CAS', 'OAuth2'],
 
       apps: [
         {
           id: 1,
-          name: "单页应用程序",
-          desc: "在浏览器中运行应用程序逻辑的 Web 应用程序。",
-          icon: require("@/assets/img/spa.svg"),
+          name: '单页应用程序',
+          desc: '在浏览器中运行应用程序逻辑的 Web 应用程序。',
+          icon: require('@/assets/img/spa.svg'),
           tech: [
-            require("@/assets/img/react.svg"),
-            require("@/assets/img/vuejs.svg"),
-            require("@/assets/img/javascript.svg")
+            require('@/assets/img/react.svg'),
+            require('@/assets/img/vuejs.svg'),
+            require('@/assets/img/javascript.svg')
           ],
-          proto: ["OIDC"],
+          proto: ['OIDC']
         },
         {
           id: 2,
-          name: "传统 Web 应用程序",
-          desc: "在服务器端运行应用程序逻辑的 Web 应用程序。",
-          icon: require("@/assets/img/web.svg"),
+          name: '传统 Web 应用程序',
+          desc: '在服务器端运行应用程序逻辑的 Web 应用程序。',
+          icon: require('@/assets/img/web.svg'),
           tech: [
-            require("@/assets/img/java.svg"),
-            require("@/assets/img/python.svg"),
-            require("@/assets/img/go.svg")
+            require('@/assets/img/java.svg'),
+            require('@/assets/img/python.svg'),
+            require('@/assets/img/go.svg')
           ],
-          proto: ["OIDC", "SAML"],
+          proto: ['OIDC', 'SAML']
         },
         {
           id: 3,
-          name: "移动应用",
-          desc: "专为移动设备开发的应用程序。",
-          icon: require("@/assets/img/mobile.svg"),
+          name: '移动应用',
+          desc: '专为移动设备开发的应用程序。',
+          icon: require('@/assets/img/mobile.svg'),
           tech: [
-            require("@/assets/img/android.svg"),
-            require("@/assets/img/ios.png"),
-            require("@/assets/img/flutter.svg")
+            require('@/assets/img/android.svg'),
+            require('@/assets/img/ios.png'),
+            require('@/assets/img/flutter.svg')
           ],
-          proto: ["OIDC"],
+          proto: ['OIDC']
         },
         {
           id: 4,
-          name: "M2M 应用",
-          desc: "专为机器间通信而设计的应用。",
-          icon: require("@/assets/img/m2m.svg"),
+          name: 'M2M 应用',
+          desc: '专为机器间通信而设计的应用。',
+          icon: require('@/assets/img/m2m.svg'),
           tech: [
-            require("@/assets/img/oauth.svg"),
+            require('@/assets/img/oauth.svg')
           ],
-          proto: ["OAuth2"],
+          proto: ['OAuth2']
         },
         {
           id: 5,
-          name: "基于标准的应用程序",
-          desc: "使用标准协议构建的应用。",
-          icon: require("@/assets/img/std.svg"),
+          name: '基于标准的应用程序',
+          desc: '使用标准协议构建的应用。',
+          icon: require('@/assets/img/std.svg'),
           tech: [
-            require("@/assets/img/oauth.svg"),
-            require("@/assets/img/openid.png"),
-            require("@/assets/img/saml.svg"),
-            require("@/assets/img/cas.png"),
+            require('@/assets/img/oauth.svg'),
+            require('@/assets/img/openid.png'),
+            require('@/assets/img/cas.png')
           ],
-          proto: ["SAML", "OIDC", "CAS", "OAuth2"],
-        },
-      ],
-    };
+          proto: ['OIDC', 'CAS', 'OAuth2']
+        }
+      ]
+    }
   },
 
   computed: {
     filteredApps() {
       return this.apps.filter(app => {
-        const matchKeyword = !this.keyword || app.name.includes(this.keyword);
+        const matchKeyword = !this.keyword || app.name.includes(this.keyword)
 
         const matchTag =
-          this.activeTag === "全部" || app.proto.includes(this.activeTag);
+          this.activeTag === '全部' || app.proto.includes(this.activeTag)
 
-        return matchKeyword && matchTag;
-      });
+        return matchKeyword && matchTag
+      })
     }
   },
 
   methods: {
     selectTag(tag) {
-      this.activeTag = tag;
+      this.activeTag = tag
     },
 
     selectApp(item) {
-      this.$message.success("选择了：" + item.name);
+      this.$message.success('选择了：' + item.name)
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
