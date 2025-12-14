@@ -16,7 +16,7 @@
         @click="onStatClick(item)"
       >
         <div class="stat-icon" :style="{ background: item.color }">
-          <i :class="item.icon"/>
+          <i :class="item.icon" />
         </div>
         <div class="stat-info">
           <div class="stat-title">{{ item.title }}</div>
@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Dashboard',
@@ -115,14 +115,14 @@ export default {
           value: 42,
           icon: 'el-icon-menu',
           color: 'linear-gradient(135deg,#a78bfa,#7c3aed)',
-          path: '/apps'
+          path: '/app'
         },
         {
           title: '接口调用量',
           value: '24,581',
           icon: 'el-icon-data-line',
           color: 'linear-gradient(135deg,#34d399,#059669)',
-          path: '/statistics/api'
+          path: '/permissionManagement/apiResource'
         },
         {
           title: '今日登录',

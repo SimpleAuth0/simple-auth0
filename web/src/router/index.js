@@ -45,13 +45,20 @@ export const constantRoutes = [
       component: () => import('@/views/app/index'),
       meta: {title: '应用', icon: 'app'},
     },
-      {
-        path: 'create',
-        name: '创建应用',
-        component: () => import('@/views/app/create'),
-        meta: {title: '创建应用', icon: 'app'},
-        hidden: true
-      }]
+    {
+      path: 'create',
+      name: '创建应用',
+      component: () => import('@/views/app/create'),
+      meta: {title: '创建应用', icon: 'app'},
+      hidden: true
+    },
+    {
+      path: ':id',
+      name: 'AppDetail',
+      component: () => import('@/views/app/appDetail'),
+      hidden: true
+    },
+    ]
   },
   {
     path: '/identity',
