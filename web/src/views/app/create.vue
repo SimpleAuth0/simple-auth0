@@ -1,6 +1,14 @@
 <template>
   <div class="app-create-page">
 
+    <!-- 顶部导航 -->
+    <div class="page-header">
+      <div class="back-btn" @click="goBack">
+        <i class="el-icon-arrow-left" />
+        <span>返回</span>
+      </div>
+    </div>
+
     <!-- 顶部标题 -->
     <h2 class="page-title">创建新应用程序</h2>
 
@@ -64,12 +72,20 @@
 
     </div>
 
+    <!--单页应用程序创建弹框-->
+    <create-spa-dialog
+      :visible.sync="showSpaDialog"
+      @created="onCreated"
+    />
   </div>
 </template>
 
 <script>
+import CreateSpaDialog from './createSpaDialog.vue'
+
 export default {
   name: 'AppCreatePage',
+  components: { CreateSpaDialog },
 
   data() {
     return {
@@ -137,7 +153,8 @@ export default {
           ],
           proto: ['OIDC', 'CAS', 'OAuth2']
         }
-      ]
+      ],
+      showSpaDialog: false
     }
   },
 
@@ -160,7 +177,27 @@ export default {
     },
 
     selectApp(item) {
-      this.$message.success('选择了：' + item.name)
+      if (item.id === 1) {
+        this.showSpaDialog = true
+      }
+    },
+
+    goBack() {
+      // 优先返回上一页，否则回到应用列表
+      if (this.$router && this.$router.history.current.from) {
+        this.$router.back()
+      } else {
+        this.$router.push('/app')
+      }
+    },
+
+    onCreated(appId) {
+      // 创建成功后，进入应用详情页
+      this.$router.push({
+        name: 'AppDetail',
+        params: { id: appId },
+        query: { from: 'create' }
+      })
     }
   }
 }
@@ -170,6 +207,34 @@ export default {
 .app-create-page {
   padding: 30px 40px;
   color: #333;
+
+  .page-header {
+    margin-bottom: 6px;
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+
+      font-size: 14px;
+      color: #606266;
+      cursor: pointer;
+
+      i {
+        margin-right: 6px;
+        font-size: 16px;
+      }
+
+      padding: 6px 10px;
+      border-radius: 8px;
+
+      transition: background 0.15s ease, color 0.15s ease;
+
+      &:hover {
+        background: #f5f7fa;
+        color: #409eff;
+      }
+    }
+  }
 
   .page-title {
     font-size: 26px;

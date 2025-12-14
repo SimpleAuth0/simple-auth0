@@ -6,23 +6,23 @@
       <el-form :inline="true" size="small">
 
         <el-form-item label="应用名称">
-          <el-input v-model="query.name" placeholder="输入名称或 ClientId"/>
+          <el-input v-model="query.name" placeholder="输入名称或 ClientId" />
         </el-form-item>
 
         <el-form-item label="应用类型">
           <el-select v-model="query.type" clearable placeholder="全部类型">
-            <el-option label="传统WEB应用" value="web"/>
-            <el-option label="单页应用" value="spa"/>
-            <el-option label="移动应用" value="mobile"/>
-            <el-option label="M2M应用" value="m2m"/>
-            <el-option label="标准应用" value="std"/>
+            <el-option label="传统WEB应用" value="web" />
+            <el-option label="单页应用" value="spa" />
+            <el-option label="移动应用" value="mobile" />
+            <el-option label="M2M应用" value="m2m" />
+            <el-option label="标准应用" value="std" />
           </el-select>
         </el-form-item>
 
         <el-form-item label="状态">
           <el-select v-model="query.status" clearable placeholder="全部">
-            <el-option label="启用" value="enabled"/>
-            <el-option label="停用" value="disabled"/>
+            <el-option label="启用" value="enabled" />
+            <el-option label="停用" value="disabled" />
           </el-select>
         </el-form-item>
 
@@ -44,8 +44,8 @@
       <div class="card-title">应用列表</div>
 
       <el-table :data="appList" class="app-table" highlight-current-row>
-        <el-table-column label="应用名称" prop="name" min-width="150"/>
-        <el-table-column label="Client ID" prop="clientId" min-width="200"/>
+        <el-table-column label="应用名称" prop="name" min-width="150" />
+        <el-table-column label="Client ID" prop="clientId" min-width="200" />
 
         <el-table-column label="应用类型" prop="type" width="160">
           <template slot-scope="{ row }">
@@ -53,7 +53,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column label="协议类型" prop="protocolType" width="160"/>
+        <el-table-column label="协议类型" prop="protocolType" width="160" />
 
         <el-table-column label="状态" width="100">
           <template slot-scope="{ row }">
@@ -128,8 +128,12 @@ export default {
       this.$router.push('/app/create')
     },
 
-    detailApp(app) {
-      this.$message.info('打开应用详情：' + app.name)
+    detailApp(appId) {
+      this.$router.push({
+        name: 'AppDetail',
+        params: { id: appId },
+        query: { from: 'create' }
+      })
     },
 
     editApp(app) {
@@ -137,14 +141,14 @@ export default {
     },
 
     enableApp(app) {
-      this.$confirm(`确定禁用应用？`, '提示', {type: 'warning'})
+      this.$confirm(`确定禁用应用？`, '提示', { type: 'warning' })
         .then(() => this.$message.success('已禁用'))
         .catch(() => {
         })
     },
 
     deleteApp(app) {
-      this.$confirm(`确定删除应用：${app.name}？`, '提示', {type: 'warning'})
+      this.$confirm(`确定删除应用：${app.name}？`, '提示', { type: 'warning' })
         .then(() => this.$message.success('已删除'))
         .catch(() => {
         })

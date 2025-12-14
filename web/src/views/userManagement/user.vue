@@ -7,22 +7,22 @@
 
         <!-- 常规搜索 -->
         <el-form-item label="用户名">
-          <el-input v-model="searchForm.username" placeholder="请输入用户名" clearable/>
+          <el-input v-model="searchForm.username" placeholder="请输入用户名" clearable />
         </el-form-item>
 
         <el-form-item label="手机号">
-          <el-input v-model="searchForm.phone" placeholder="请输入手机号" clearable/>
+          <el-input v-model="searchForm.phone" placeholder="请输入手机号" clearable />
         </el-form-item>
 
         <el-form-item label="邮箱">
-          <el-input v-model="searchForm.email" placeholder="请输入邮箱" clearable/>
+          <el-input v-model="searchForm.email" placeholder="请输入邮箱" clearable />
         </el-form-item>
 
         <div class="search-btn-group">
-          <el-button type="primary" @click="search">查询</el-button>
-          <el-button @click="reset">重置</el-button>
-          <el-button type="text" class="toggle-advanced-btn" @click="toggleAdvanced">
-            <i :class="showAdvanced ? 'el-icon-arrow-up' : 'el-icon-arrow-down'"></i>
+          <el-button type="primary" size="mini" @click="search">查询</el-button>
+          <el-button size="mini" @click="reset">重置</el-button>
+          <el-button size="mini" type="text" class="toggle-advanced-btn" @click="toggleAdvanced">
+            <i :class="showAdvanced ? 'el-icon-arrow-up' : 'el-icon-arrow-down'" />
             高级搜索
           </el-button>
         </div>
@@ -68,11 +68,11 @@
         class="user-table"
         :header-cell-style="tableHeaderStyle"
       >
-        <el-table-column prop="id" label="ID" width="80"/>
-        <el-table-column prop="username" label="用户名"/>
-        <el-table-column prop="phone" label="手机号" width="140"/>
-        <el-table-column prop="email" label="邮箱"/>
-        <el-table-column prop="createTime" label="创建时间" width="150"/>
+        <el-table-column prop="id" label="ID" width="80" />
+        <el-table-column prop="username" label="用户名" />
+        <el-table-column prop="phone" label="手机号" width="140" />
+        <el-table-column prop="email" label="邮箱" />
+        <el-table-column prop="createTime" label="创建时间" width="150" />
         <el-table-column label="操作" width="180">
           <template slot-scope="{ row }">
             <el-button size="mini" class="text-btn" @click="editUser(row)">编辑</el-button>
@@ -101,53 +101,53 @@
 
 <script>
 export default {
-  name: "UserList",
+  name: 'UserList',
   data() {
     return {
       showAdvanced: false,
       searchForm: {
-        username: "",
-        phone: "",
-        email: "",
+        username: '',
+        phone: '',
+        email: '',
         createTime: null
       },
       tableData: [
-        { id: 1, username: "zhangsan", phone: "13800000001", email: "zhangsan@example.com", createTime: "2023-04-10" },
-        { id: 2, username: "lisi", phone: "13800000002", email: "lisi@example.com", createTime: "2023-05-01" }
+        { id: 1, username: 'zhangsan', phone: '13800000001', email: 'zhangsan@example.com', createTime: '2023-04-10' },
+        { id: 2, username: 'lisi', phone: '13800000002', email: 'lisi@example.com', createTime: '2023-05-01' }
       ],
       pageSize: 10,
       total: 52
-    };
+    }
   },
   methods: {
     toggleAdvanced() {
-      this.showAdvanced = !this.showAdvanced;
+      this.showAdvanced = !this.showAdvanced
     },
     search() {
-      this.$message.success("查询成功");
+      this.$message.success('查询成功')
     },
     reset() {
-      this.searchForm = { username: "", phone: "", email: "", createTime: null };
+      this.searchForm = { username: '', phone: '', email: '', createTime: null }
     },
     addUser() {
-      this.$message.info("点击新增用户");
+      this.$message.info('点击新增用户')
     },
     editUser(row) {
-      this.$message.info("编辑：" + row.username);
+      this.$message.info('编辑：' + row.username)
     },
     deleteUser(row) {
-      this.$confirm(`确认删除用户：${row.username}?`, "提示", { type: "warning" })
-        .then(() => this.$message.success("已删除"))
-        .catch(() => {});
+      this.$confirm(`确认删除用户：${row.username}?`, '提示', { type: 'warning' })
+        .then(() => this.$message.success('已删除'))
+        .catch(() => {})
     },
     pageChange(p) {
-      this.$message.info(`跳转到第 ${p} 页`);
+      this.$message.info(`跳转到第 ${p} 页`)
     },
     tableHeaderStyle() {
-      return { background: "#f5f7fa", fontWeight: "bold", color: "#303133" };
+      return { background: '#f5f7fa', fontWeight: 'bold', color: '#303133' }
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -174,13 +174,20 @@ export default {
       align-items: center;
       margin-left: auto;
 
+      button {
+        margin-left: 8px; /* 缩小间距 */
+      }
+
       .toggle-advanced-btn {
-        color: #409eff;
         display: flex;
         align-items: center;
+        padding: 0;
+        font-size: 13px; /* 更适配 mini 尺寸 */
+        color: #409eff;
 
         i {
-          margin-right: 4px;
+          margin-right: 2px;
+          font-size: 12px;
         }
       }
     }
