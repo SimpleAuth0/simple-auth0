@@ -5,7 +5,6 @@ import Layout from '@/layout'
 
 Vue.use(Router)
 
-
 /**
  * constantRoutes
  * a base page that does not have permission requirements
@@ -32,7 +31,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: '首页',
       component: () => import('@/views/dashboard/index'),
-      meta: {title: '首页', icon: 'dashboard'}
+      meta: { title: '首页', icon: 'dashboard' }
     }]
   },
   {
@@ -43,13 +42,13 @@ export const constantRoutes = [
       path: '',
       name: '应用',
       component: () => import('@/views/app/index'),
-      meta: {title: '应用', icon: 'app'},
+      meta: { title: '应用', icon: 'app' }
     },
     {
       path: 'create',
       name: '创建应用',
       component: () => import('@/views/app/create'),
-      meta: {title: '创建应用', icon: 'app'},
+      meta: { title: '创建应用', icon: 'app' },
       hidden: true
     },
     {
@@ -57,7 +56,7 @@ export const constantRoutes = [
       name: 'AppDetail',
       component: () => import('@/views/app/appDetail'),
       hidden: true
-    },
+    }
     ]
   },
   {
@@ -65,27 +64,27 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/identity/enterprise',
     name: '身份源管理',
-    meta: {title: '身份源管理', icon: 'identity'},
+    meta: { title: '身份源管理', icon: 'identity' },
     children: [
       {
         path: 'enterprise',
         name: '企业身份源',
         component: () => import('@/views/identity/enterprise/index'),
-        meta: {title: '企业身份源', icon: 'enterprise'}
+        meta: { title: '企业身份源', icon: 'enterprise' }
       },
       {
         path: 'create',
         name: '创建身份源',
         component: () => import('@/views/identity/enterprise/create'),
         hidden: true,
-        meta: {title: '创建身份源'}
+        meta: { title: '创建身份源' }
       },
       {
         path: 'social',
         name: '社会身份源',
         component: () => import('@/views/identity/social/index'),
-        meta: {title: '社会身份源', icon: 'social'}
-      },
+        meta: { title: '社会身份源', icon: 'social' }
+      }
     ]
   },
   {
@@ -93,25 +92,25 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/userManagement/user',
     name: '用户管理',
-    meta: {title: '用户管理', icon: 'user-manage'},
+    meta: { title: '用户管理', icon: 'user-manage' },
     children: [
       {
         path: 'user',
         name: '用户',
         component: () => import('@/views/userManagement/user'),
-        meta: {title: '用户', icon: 'user'}
+        meta: { title: '用户', icon: 'user' }
       },
       {
         path: 'userGroup',
         name: '用户组',
         component: () => import('@/views/userManagement/userGroup'),
-        meta: {title: '用户组', icon: 'user-group'}
+        meta: { title: '用户组', icon: 'user-group' }
       },
       {
         path: 'role',
         name: '角色',
         component: () => import('@/views/userManagement/role'),
-        meta: {title: '角色', icon: 'role'}
+        meta: { title: '角色', icon: 'role' }
       }
     ]
   },
@@ -120,21 +119,54 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/permissionManagement/',
     name: '权限管理',
-    meta: {title: '权限管理', icon: 'identity'},
+    meta: { title: '权限管理', icon: 'identity' },
     children: [
       {
-         path: 'generalResource',
-         name: '常规资源',
-         component: () => import('@/views/permission/generalResource/index'),
-         meta: {title: '常规资源', icon: 'ui'}
+        path: 'generalResource',
+        name: '常规资源',
+        component: () => import('@/views/permission/generalResource/index'),
+        meta: { title: '常规资源', icon: 'ui' }
       },
       {
         path: 'apiResource',
         name: 'API资源',
         component: () => import('@/views/permission/apiResource/index'),
-        meta: {title: 'API资源', icon: 'api'}
-      },
+        meta: { title: 'API资源', icon: 'api' }
+      }
 
+    ]
+  },
+  {
+    path: '/security',
+    component: Layout,
+    redirect: '/security/',
+    name: '安全',
+    meta: { title: '安全', icon: 'security' },
+    children: [
+      {
+        path: 'attackProtection',
+        name: '攻击防护',
+        component: () => import('@/views/security/attackProtection/index'),
+        meta: { title: '攻击防护', icon: 'attackProtection' }
+      },
+      {
+        path: 'mfa',
+        name: '多因素身份认证',
+        component: () => import('@/views/security/mfa/index'),
+        meta: { title: '多因素身份认证', icon: 'MFA' }
+      },
+      {
+        path: 'securityPolicy',
+        name: '登陆验证策略',
+        component: () => import('@/views/security/securityPolicy/index'),
+        meta: { title: '登陆验证策略', icon: 'securityPolicy' }
+      },
+      {
+        path: 'passwordPolicy',
+        name: '密码策略',
+        component: () => import('@/views/security/passwordPolicy/index'),
+        meta: { title: '密码策略', icon: 'passwordPolicy' }
+      }
     ]
   },
   {
@@ -145,18 +177,17 @@ export const constantRoutes = [
       path: '',
       name: '审计日志',
       component: () => import('@/views/auditLog/index'),
-      meta: {title: '审计日志', icon: 'log'}
+      meta: { title: '审计日志', icon: 'log' }
     }]
   },
 
-
   // 404 page must be placed at the end !!!
-  {path: '*', redirect: '/404', hidden: true}
+  { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
-  scrollBehavior: () => ({y: 0}),
+  scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })
 
