@@ -8,7 +8,7 @@
         <p class="subtitle">统一身份认证 · 更简单、更安全</p>
       </div>
 
-      <img class="illu-img" :src="require('@/assets/img/login.svg')" alt="illustration" />
+      <img class="illu-img" :src="require('@/assets/img/login.svg')" alt="illustration">
     </div>
 
     <!-- 右侧登录卡片 -->
@@ -114,21 +114,26 @@ export default {
 .login-root {
   height: 100vh;
   display: flex;
-  background: linear-gradient(135deg, #0D1B2A, #1B263B);
+  background: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
   overflow: hidden;
 }
 
 /* ================= 左侧插画区域 ================= */
 .illustration {
   flex: 1.15;
-  color: #fff;
+  color: #1f2937;
   padding: 80px 60px;
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
 
-  background: linear-gradient(145deg, rgba(75, 123, 255, 0.15), rgba(124, 58, 237, 0.15));
+  background: linear-gradient(
+      145deg,
+      #f4f7ff 0%,
+      #eef2ff 50%,
+      #f8f9ff 100%
+  );
   backdrop-filter: blur(10px);
 
   .title-block {
@@ -146,6 +151,7 @@ export default {
       font-size: 20px;
       opacity: 0.9;
       margin-top: 10px;
+      color: #475569;
     }
   }
 
@@ -167,14 +173,17 @@ export default {
   .login-card {
     width: 380px;
     padding: 40px 35px;
-    background: rgba(255, 255, 255, 0.08);
+    background: #ffffff;
     border-radius: 14px;
     backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid #e5e7eb;
+    box-shadow:
+      0 10px 25px rgba(0, 0, 0, 0.06),
+      0 4px 10px rgba(0, 0, 0, 0.04);
 
     .login-title {
       text-align: center;
-      color: #fff;
+      color: #111827;
       margin-bottom: 30px;
       font-size: 22px;
       font-weight: 600;
@@ -189,6 +198,7 @@ export default {
       border: none;
       font-size: 16px;
       font-weight: 500;
+      box-shadow: 0 6px 14px rgba(79, 70, 229, 0.25);
     }
 
     .password-icon {
@@ -196,6 +206,18 @@ export default {
       color: #ddd;
       font-size: 18px;
     }
+
+    ::v-deep .el-input__inner {
+      height: 42px;
+      border-radius: 8px;
+      border-color: #d1d5db;
+    }
+
+    ::v-deep .el-form-item__label {
+      color: #374151;
+      font-weight: 500;
+    }
+
   }
 }
 

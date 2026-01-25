@@ -72,27 +72,28 @@
 
     </div>
 
-    <!--单页应用程序创建弹框-->
-    <create-spa-dialog
-      :visible.sync="showSpaDialog"
+    <!--应用程序创建弹框-->
+    <create-app-dialog
+      :visible.sync="showAppDialog"
+      :app-type="appType"
       @created="onCreated"
     />
   </div>
 </template>
 
 <script>
-import CreateSpaDialog from './createSpaDialog.vue'
+import CreateAppDialog from './createAppDialog.vue'
 
 export default {
   name: 'AppCreatePage',
-  components: { CreateSpaDialog },
+  components: { CreateAppDialog },
 
   data() {
     return {
       keyword: '',
       activeTag: '全部',
 
-      protocolTags: ['全部', 'OIDC', 'CAS', 'OAuth2'],
+      protocolTags: ['全部', 'OIDC', 'OAuth2'],
 
       apps: [
         {
@@ -105,19 +106,20 @@ export default {
             require('@/assets/img/vuejs.svg'),
             require('@/assets/img/javascript.svg')
           ],
-          proto: ['OIDC']
+          proto: ['OIDC'],
+          appType: 'SPA'
         },
         {
           id: 2,
-          name: '传统 Web 应用程序',
-          desc: '在服务器端运行应用程序逻辑的 Web 应用程序。',
-          icon: require('@/assets/img/web.svg'),
+          name: '基于标准的应用程序',
+          desc: '使用标准协议构建的应用。',
+          icon: require('@/assets/img/std.svg'),
           tech: [
-            require('@/assets/img/java.svg'),
-            require('@/assets/img/python.svg'),
-            require('@/assets/img/go.svg')
+            require('@/assets/img/oauth.svg'),
+            require('@/assets/img/openid.png')
           ],
-          proto: ['OIDC', 'SAML']
+          proto: ['OIDC', 'OAuth2'],
+          appType: 'STANDARD'
         },
         {
           id: 3,
@@ -129,7 +131,8 @@ export default {
             require('@/assets/img/ios.png'),
             require('@/assets/img/flutter.svg')
           ],
-          proto: ['OIDC']
+          proto: ['OIDC'],
+          appType: 'MOBILE'
         },
         {
           id: 4,
@@ -139,22 +142,12 @@ export default {
           tech: [
             require('@/assets/img/oauth.svg')
           ],
-          proto: ['OAuth2']
-        },
-        {
-          id: 5,
-          name: '基于标准的应用程序',
-          desc: '使用标准协议构建的应用。',
-          icon: require('@/assets/img/std.svg'),
-          tech: [
-            require('@/assets/img/oauth.svg'),
-            require('@/assets/img/openid.png'),
-            require('@/assets/img/cas.png')
-          ],
-          proto: ['OIDC', 'CAS', 'OAuth2']
+          proto: ['OAuth2'],
+          appType: 'M2M'
         }
       ],
-      showSpaDialog: false
+      showAppDialog: false,
+      appType: ''
     }
   },
 
@@ -177,9 +170,8 @@ export default {
     },
 
     selectApp(item) {
-      if (item.id === 1) {
-        this.showSpaDialog = true
-      }
+      this.appType = item.appType
+      this.showAppDialog = true
     },
 
     goBack() {
