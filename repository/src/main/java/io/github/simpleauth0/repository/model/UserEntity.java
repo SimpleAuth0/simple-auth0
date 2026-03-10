@@ -23,7 +23,6 @@ public class UserEntity {
     private String email;
     private String avatar;
     private String setPasswordMethod;
-    private String storeType;
     private Integer status;
     private Integer accountNonLocked;
     private Integer enabled;

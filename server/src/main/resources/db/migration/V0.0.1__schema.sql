@@ -12,7 +12,6 @@ CREATE TABLE `auth0_user`
     `email`               varchar(320)          DEFAULT NULL COMMENT '邮箱',
     `avatar`              varchar(512)          DEFAULT NULL COMMENT '头像URL',
     `set_password_method` varchar(20)  NOT NULL DEFAULT 'ADMIN_SET' COMMENT 'ADMIN_SET:管理员设置;INVITE_EMAIL:邮箱设置;INVITE_OFFLINE:离线邀请',
-    `store_type`          varchar(50)  NOT NULL DEFAULT 'DEFAULT' COMMENT '存储类型',
     `status`              tinyint(1) NOT NULL DEFAULT '0' COMMENT '1:正常;2:过期;3:等待密码重置;4:等待初始密码设置',
     `account_non_locked`  tinyint(1) NOT NULL DEFAULT '0' COMMENT '0:已锁定;1:未锁定;',
     `enabled`             tinyint(1) NOT NULL DEFAULT '0' COMMENT '0:禁用;1:启用;',
@@ -114,6 +113,20 @@ CREATE TABLE `auth0_user_role`
     UNIQUE KEY `uk_user_role` (`user_id`, `role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- =========================
+-- 角色-组关系表
+-- =========================
+DROP TABLE IF EXISTS `auth0_user_group`;
+CREATE TABLE `auth0_user_group`
+(
+    `id`          bigint   NOT NULL AUTO_INCREMENT,
+    `role_id`     bigint   NOT NULL COMMENT '角色ID',
+    `group_id`    bigint   NOT NULL COMMENT '组ID',
+    `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` datetime          DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_user_group` (`user_id`, `group_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- =========================
 -- 权限表
