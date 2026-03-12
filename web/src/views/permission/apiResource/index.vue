@@ -1,10 +1,18 @@
 <template>
   <div class="api-resource-page">
+    <!-- 页面头部 -->
+    <div class="page-header">
+      <div class="header-content">
+        <div class="title-section">
+          <h1 class="page-title">API资源</h1>
+          <p class="page-desc">管理后端API接口权限，控制角色对API的访问</p>
+        </div>
+      </div>
+    </div>
 
     <!-- 搜索区 -->
     <el-card class="search-card" shadow="hover">
       <el-form :inline="true" :model="searchForm" size="small" class="search-form">
-
         <el-form-item label="API名称">
           <el-input v-model="searchForm.name" placeholder="请输入API名称" clearable />
         </el-form-item>
@@ -24,25 +32,16 @@
         </el-form-item>
 
         <div class="search-btn-group">
-          <el-button type="primary" icon="el-icon-search" size="mini" @click="search">查询</el-button>
+          <el-button size="mini" type="primary" icon="el-icon-search" @click="search">查询</el-button>
           <el-button size="mini" icon="el-icon-refresh" @click="reset">重置</el-button>
         </div>
-
       </el-form>
     </el-card>
 
     <!-- 列表卡片 -->
     <el-card class="table-card" shadow="hover">
-
-      <!-- 顶部操作行 -->
       <div class="table-header-bar">
-        <el-button
-          size="small"
-          type="primary"
-          icon="el-icon-plus"
-          class="add-btn"
-          @click="addResource"
-        >
+        <el-button size="small" type="primary" icon="el-icon-plus" @click="addResource">
           新增API资源
         </el-button>
         <el-button
@@ -57,7 +56,6 @@
         </el-button>
       </div>
 
-      <!-- 表格 -->
       <el-table
         v-loading="loading"
         :data="tableData"
@@ -76,7 +74,7 @@
         </el-table-column>
         <el-table-column prop="method" label="方法" width="100">
           <template slot-scope="{ row }">
-            <el-tag :type="getMethodType(row.method)" size="small">{{ row.method }}</el-tag>
+            <el-tag :type="getMethodType(row.method)" size="small" effect="dark">{{ row.method }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="description" label="描述" min-width="200" show-overflow-tooltip />
@@ -107,7 +105,6 @@
           @current-change="pageChange"
         />
       </div>
-
     </el-card>
 
     <!-- 新增/编辑API资源对话框 -->
@@ -162,7 +159,6 @@
         <el-button type="primary" :loading="submitLoading" @click="submitForm">确 定</el-button>
       </div>
     </el-dialog>
-
   </div>
 </template>
 
@@ -190,15 +186,11 @@ export default {
       currentPage: 1,
       total: 6,
       selectedRows: [],
-
-      // 对话框
       dialogVisible: false,
       dialogTitle: '新增API资源',
       isEdit: false,
       submitLoading: false,
       currentId: null,
-
-      // 表单
       resourceForm: {
         name: '',
         path: '',
@@ -206,16 +198,12 @@ export default {
         description: ''
       },
       resourceRules: {
-        name: [
-          { required: true, message: '请输入API名称', trigger: 'blur' }
-        ],
+        name: [{ required: true, message: '请输入API名称', trigger: 'blur' }],
         path: [
           { required: true, message: '请输入请求路径', trigger: 'blur' },
           { pattern: /^\/.*/, message: '路径必须以/开头', trigger: 'blur' }
         ],
-        method: [
-          { required: true, message: '请选择请求方法', trigger: 'change' }
-        ]
+        method: [{ required: true, message: '请选择请求方法', trigger: 'change' }]
       }
     }
   },
@@ -224,8 +212,7 @@ export default {
       this.loading = true
       setTimeout(() => {
         this.loading = false
-        this.$message.success('查询成功')
-      }, 500)
+      }, 300)
     },
     reset() {
       this.searchForm = {
@@ -275,11 +262,11 @@ export default {
     },
     getMethodType(method) {
       const typeMap = {
-        'GET': 'success',
-        'POST': 'primary',
-        'PUT': 'warning',
-        'DELETE': 'danger',
-        'PATCH': 'info'
+        GET: 'success',
+        POST: 'primary',
+        PUT: 'warning',
+        DELETE: 'danger',
+        PATCH: 'info'
       }
       return typeMap[method] || 'info'
     },
@@ -320,10 +307,7 @@ export default {
             if (this.isEdit) {
               const index = this.tableData.findIndex(item => item.id === this.currentId)
               if (index > -1) {
-                this.tableData[index] = {
-                  ...this.tableData[index],
-                  ...this.resourceForm
-                }
+                this.tableData[index] = { ...this.tableData[index], ...this.resourceForm }
               }
               this.$message.success('修改成功')
             } else {
@@ -347,54 +331,73 @@ export default {
 
 <style lang="scss" scoped>
 .api-resource-page {
-  padding: 20px;
+  padding: 24px;
+
+  // 页面头部
+  .page-header {
+    margin-bottom: 24px;
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+
+      .title-section {
+        .page-title {
+          font-size: 24px;
+          font-weight: 600;
+          color: #1a1a1a;
+          margin: 0 0 8px 0;
+        }
+
+        .page-desc {
+          font-size: 14px;
+          color: #666;
+          margin: 0;
+        }
+      }
+
+      .header-actions {
+        display: flex;
+        gap: 12px;
+      }
+    }
+  }
 
   .search-card {
     margin-bottom: 16px;
-    border-radius: 10px;
-  }
+    border-radius: 12px;
 
-  .search-form {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-
-    .el-form-item {
-      margin-right: 20px;
-      margin-bottom: 12px;
-    }
-
-    .search-btn-group {
+    .search-form {
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
-      margin-left: auto;
 
-      button {
-        margin-left: 8px;
+      .el-form-item {
+        margin-right: 20px;
+        margin-bottom: 0;
+      }
+
+      .search-btn-group {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+
+        button {
+          margin-left: 8px;
+        }
       }
     }
   }
 
   .table-card {
-    border-radius: 10px;
-    padding-bottom: 10px;
+    border-radius: 12px;
 
     .table-header-bar {
       display: flex;
       justify-content: flex-start;
       gap: 10px;
-      margin-bottom: 12px;
-
-      .add-btn {
-        border: none !important;
-        background-color: #409eff20;
-        color: #409eff;
-        font-weight: 500;
-      }
-
-      .add-btn:hover {
-        background-color: #409eff30;
-      }
+      margin-bottom: 16px;
     }
 
     .resource-table {
@@ -419,7 +422,7 @@ export default {
     }
 
     .pagination-box {
-      margin-top: 15px;
+      margin-top: 16px;
       text-align: right;
     }
   }
@@ -434,10 +437,22 @@ export default {
 }
 
 .danger {
-  color: #f56c6c;
+  color: #ff4d4f;
 }
 
-.danger:hover {
-  color: #f78989;
+@media (max-width: 768px) {
+  .api-resource-page {
+    padding: 16px;
+
+    .search-card {
+      .search-form {
+        .search-btn-group {
+          margin-left: 0;
+          margin-top: 12px;
+          width: 100%;
+        }
+      }
+    }
+  }
 }
 </style>

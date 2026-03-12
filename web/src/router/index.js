@@ -144,12 +144,6 @@ export const constantRoutes = [
     meta: { title: '安全', icon: 'security' },
     children: [
       {
-        path: 'attackProtection',
-        name: '攻击防护',
-        component: () => import('@/views/security/attackProtection/index'),
-        meta: { title: '攻击防护', icon: 'attackProtection' }
-      },
-      {
         path: 'mfa',
         name: '多因素身份认证',
         component: () => import('@/views/security/mfa/index'),

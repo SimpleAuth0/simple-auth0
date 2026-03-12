@@ -1,11 +1,8 @@
 <template>
   <div class="user-page">
-
     <!-- 搜索区 -->
     <el-card class="search-card" shadow="hover">
       <el-form :inline="true" :model="searchForm" size="small" class="search-form">
-
-        <!-- 常规搜索 -->
         <el-form-item label="用户名">
           <el-input v-model="searchForm.username" placeholder="请输入用户名" clearable />
         </el-form-item>
@@ -19,15 +16,14 @@
         </el-form-item>
 
         <div class="search-btn-group">
-          <el-button type="primary" size="mini" icon="el-icon-search" @click="search">查询</el-button>
-          <el-button size="mini" icon="el-icon-refresh" @click="reset">重置</el-button>
-          <el-button size="mini" type="text" class="toggle-advanced-btn" @click="toggleAdvanced">
+          <el-button type="primary" icon="el-icon-search" size="mini" @click="search">查询</el-button>
+          <el-button icon="el-icon-refresh" size="mini" @click="reset">重置</el-button>
+          <el-button type="text" class="toggle-advanced-btn" @click="toggleAdvanced">
             <i :class="showAdvanced ? 'el-icon-arrow-up' : 'el-icon-arrow-down'" />
-            高级搜索
+            {{ showAdvanced ? '收起' : '高级' }}
           </el-button>
         </div>
 
-        <!-- 折叠高级搜索 -->
         <transition name="slide-fade">
           <div v-show="showAdvanced" class="advanced-search">
             <el-form-item label="状态">
@@ -48,14 +44,11 @@
             </el-form-item>
           </div>
         </transition>
-
       </el-form>
     </el-card>
 
     <!-- 列表卡片 -->
     <el-card class="table-card" shadow="hover">
-
-      <!-- 顶部操作行 -->
       <div class="table-header-bar">
         <el-button
           size="small"
@@ -73,12 +66,9 @@
           plain
           :disabled="selectedRows.length === 0"
           @click="batchDelete"
-        >
-          批量删除
-        </el-button>
+        >批量删除</el-button>
       </div>
 
-      <!-- 表格 -->
       <el-table
         v-loading="loading"
         :data="tableData"
@@ -117,17 +107,13 @@
             <el-button size="mini" type="text" icon="el-icon-view" @click="viewUser(row)">查看</el-button>
             <el-button size="mini" type="text" icon="el-icon-edit" @click="editUser(row)">编辑</el-button>
             <el-button size="mini" type="text" icon="el-icon-key" @click="resetPassword(row)">重置密码</el-button>
-            <el-popconfirm
-              title="确定删除该用户吗？"
-              @confirm="deleteUser(row)"
-            >
+            <el-popconfirm title="确定删除该用户吗？" @confirm="deleteUser(row)">
               <el-button slot="reference" size="mini" type="text" class="danger" icon="el-icon-delete">删除</el-button>
             </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
 
-      <!-- 分页 -->
       <div class="pagination-box">
         <el-pagination
           background
@@ -140,7 +126,6 @@
           @current-change="pageChange"
         />
       </div>
-
     </el-card>
 
     <!-- 新增/编辑用户对话框 -->
@@ -151,13 +136,7 @@
       :close-on-click-modal="false"
       @close="handleDialogClose"
     >
-      <el-form
-        ref="userForm"
-        :model="userForm"
-        :rules="userRules"
-        label-width="100px"
-        class="user-form"
-      >
+      <el-form ref="userForm" :model="userForm" :rules="userRules" label-width="100px" class="user-form">
         <el-row :gutter="20">
           <el-col :span="12">
             <el-form-item label="用户名" prop="username">
@@ -187,57 +166,25 @@
         <el-row v-if="!isEdit" :gutter="20">
           <el-col :span="12">
             <el-form-item label="密码" prop="password">
-              <el-input
-                v-model="userForm.password"
-                type="password"
-                placeholder="请输入密码"
-                show-password
-              />
+              <el-input v-model="userForm.password" type="password" placeholder="请输入密码" show-password />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="确认密码" prop="confirmPassword">
-              <el-input
-                v-model="userForm.confirmPassword"
-                type="password"
-                placeholder="请再次输入密码"
-                show-password
-              />
+              <el-input v-model="userForm.confirmPassword" type="password" placeholder="请再次输入密码" show-password />
             </el-form-item>
           </el-col>
         </el-row>
 
         <el-form-item label="所属用户组" prop="groupIds">
-          <el-select
-            v-model="userForm.groupIds"
-            multiple
-            collapse-tags
-            placeholder="请选择用户组"
-            style="width: 100%"
-          >
-            <el-option
-              v-for="group in groupOptions"
-              :key="group.id"
-              :label="group.groupName"
-              :value="group.id"
-            />
+          <el-select v-model="userForm.groupIds" multiple collapse-tags placeholder="请选择用户组" style="width: 100%">
+            <el-option v-for="group in groupOptions" :key="group.id" :label="group.groupName" :value="group.id" />
           </el-select>
         </el-form-item>
 
         <el-form-item label="所属角色" prop="roleIds">
-          <el-select
-            v-model="userForm.roleIds"
-            multiple
-            collapse-tags
-            placeholder="请选择角色"
-            style="width: 100%"
-          >
-            <el-option
-              v-for="role in roleOptions"
-              :key="role.id"
-              :label="role.roleName"
-              :value="role.id"
-            />
+          <el-select v-model="userForm.roleIds" multiple collapse-tags placeholder="请选择角色" style="width: 100%">
+            <el-option v-for="role in roleOptions" :key="role.id" :label="role.roleName" :value="role.id" />
           </el-select>
         </el-form-item>
 
@@ -249,12 +196,7 @@
         </el-form-item>
 
         <el-form-item label="备注" prop="remark">
-          <el-input
-            v-model="userForm.remark"
-            type="textarea"
-            :rows="3"
-            placeholder="请输入备注信息"
-          />
+          <el-input v-model="userForm.remark" type="textarea" :rows="3" placeholder="请输入备注信息" />
         </el-form-item>
       </el-form>
 
@@ -265,11 +207,7 @@
     </el-dialog>
 
     <!-- 查看用户详情对话框 -->
-    <el-dialog
-      title="用户详情"
-      :visible.sync="detailVisible"
-      width="650px"
-    >
+    <el-dialog title="用户详情" :visible.sync="detailVisible" width="650px">
       <el-descriptions :column="2" border>
         <el-descriptions-item label="用户ID">{{ currentUser.id }}</el-descriptions-item>
         <el-descriptions-item label="用户名">{{ currentUser.username }}</el-descriptions-item>
@@ -282,15 +220,11 @@
         <el-descriptions-item label="手机号">{{ currentUser.phone || '-' }}</el-descriptions-item>
         <el-descriptions-item label="邮箱">{{ currentUser.email || '-' }}</el-descriptions-item>
         <el-descriptions-item label="所属用户组" :span="2">
-          <el-tag v-for="group in currentUser.groups" :key="group" size="small" style="margin-right: 8px">
-            {{ group }}
-          </el-tag>
+          <el-tag v-for="group in currentUser.groups" :key="group" size="small" style="margin-right: 8px">{{ group }}</el-tag>
           <span v-if="!currentUser.groups || currentUser.groups.length === 0">-</span>
         </el-descriptions-item>
         <el-descriptions-item label="所属角色" :span="2">
-          <el-tag v-for="role in currentUser.roles" :key="role" size="small" type="warning" style="margin-right: 8px">
-            {{ role }}
-          </el-tag>
+          <el-tag v-for="role in currentUser.roles" :key="role" size="small" type="warning" style="margin-right: 8px">{{ role }}</el-tag>
           <span v-if="!currentUser.roles || currentUser.roles.length === 0">-</span>
         </el-descriptions-item>
         <el-descriptions-item label="创建时间">{{ currentUser.createTime }}</el-descriptions-item>
@@ -304,33 +238,13 @@
     </el-dialog>
 
     <!-- 重置密码对话框 -->
-    <el-dialog
-      title="重置密码"
-      :visible.sync="pwdDialogVisible"
-      width="400px"
-      :close-on-click-modal="false"
-    >
-      <el-form
-        ref="pwdForm"
-        :model="pwdForm"
-        :rules="pwdRules"
-        label-width="100px"
-      >
+    <el-dialog title="重置密码" :visible.sync="pwdDialogVisible" width="400px" :close-on-click-modal="false">
+      <el-form ref="pwdForm" :model="pwdForm" :rules="pwdRules" label-width="100px">
         <el-form-item label="新密码" prop="newPassword">
-          <el-input
-            v-model="pwdForm.newPassword"
-            type="password"
-            placeholder="请输入新密码"
-            show-password
-          />
+          <el-input v-model="pwdForm.newPassword" type="password" placeholder="请输入新密码" show-password />
         </el-form-item>
         <el-form-item label="确认密码" prop="confirmPassword">
-          <el-input
-            v-model="pwdForm.confirmPassword"
-            type="password"
-            placeholder="请再次输入新密码"
-            show-password
-          />
+          <el-input v-model="pwdForm.confirmPassword" type="password" placeholder="请再次输入新密码" show-password />
         </el-form-item>
       </el-form>
       <div slot="footer">
@@ -338,7 +252,6 @@
         <el-button type="primary" :loading="pwdLoading" @click="submitPwd">确 定</el-button>
       </div>
     </el-dialog>
-
   </div>
 </template>
 
@@ -346,7 +259,6 @@
 export default {
   name: 'UserList',
   data() {
-    // 密码验证
     const validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入密码'))
@@ -432,15 +344,11 @@ export default {
       currentPage: 1,
       total: 3,
       selectedRows: [],
-
-      // 对话框相关
       dialogVisible: false,
       dialogTitle: '新增用户',
       isEdit: false,
       submitLoading: false,
       currentId: null,
-
-      // 用户表单
       userForm: {
         username: '',
         nickname: '',
@@ -458,27 +366,13 @@ export default {
           { required: true, message: '请输入用户名', trigger: 'blur' },
           { min: 3, max: 20, message: '长度在 3 到 20 个字符', trigger: 'blur' }
         ],
-        nickname: [
-          { max: 20, message: '长度不能超过 20 个字符', trigger: 'blur' }
-        ],
-        phone: [
-          { pattern: /^1[3-9]\d{9}$/, message: '手机号格式不正确', trigger: 'blur' }
-        ],
-        email: [
-          { type: 'email', message: '邮箱格式不正确', trigger: 'blur' }
-        ],
-        password: [
-          { required: true, validator: validatePass, trigger: 'blur' }
-        ],
-        confirmPassword: [
-          { required: true, validator: validatePass2, trigger: 'blur' }
-        ],
-        status: [
-          { required: true, message: '请选择状态', trigger: 'change' }
-        ]
+        nickname: [{ max: 20, message: '长度不能超过 20 个字符', trigger: 'blur' }],
+        phone: [{ pattern: /^1[3-9]\d{9}$/, message: '手机号格式不正确', trigger: 'blur' }],
+        email: [{ type: 'email', message: '邮箱格式不正确', trigger: 'blur' }],
+        password: [{ required: true, validator: validatePass, trigger: 'blur' }],
+        confirmPassword: [{ required: true, validator: validatePass2, trigger: 'blur' }],
+        status: [{ required: true, message: '请选择状态', trigger: 'change' }]
       },
-
-      // 下拉选项
       groupOptions: [
         { id: 1, groupName: '管理员组' },
         { id: 2, groupName: '研发组' },
@@ -490,26 +384,14 @@ export default {
         { id: 2, roleName: '普通用户' },
         { id: 3, roleName: '审计员' }
       ],
-
-      // 详情对话框
       detailVisible: false,
       currentUser: {},
-
-      // 密码重置对话框
       pwdDialogVisible: false,
       pwdLoading: false,
-      pwdForm: {
-        newPassword: '',
-        confirmPassword: ''
-      },
+      pwdForm: { newPassword: '', confirmPassword: '' },
       pwdRules: {
-        newPassword: [
-          { required: true, message: '请输入新密码', trigger: 'blur' },
-          { min: 6, message: '密码长度不能少于6位', trigger: 'blur' }
-        ],
-        confirmPassword: [
-          { required: true, validator: validatePwd2, trigger: 'blur' }
-        ]
+        newPassword: [{ required: true, message: '请输入新密码', trigger: 'blur' }, { min: 6, message: '密码长度不能少于6位', trigger: 'blur' }],
+        confirmPassword: [{ required: true, validator: validatePwd2, trigger: 'blur' }]
       },
       resetPwdUserId: null
     }
@@ -520,19 +402,10 @@ export default {
     },
     search() {
       this.loading = true
-      setTimeout(() => {
-        this.loading = false
-        this.$message.success('查询成功')
-      }, 500)
+      setTimeout(() => { this.loading = false }, 300)
     },
     reset() {
-      this.searchForm = {
-        username: '',
-        phone: '',
-        email: '',
-        status: '',
-        createTime: null
-      }
+      this.searchForm = { username: '', phone: '', email: '', status: '', createTime: null }
       this.search()
     },
     addUser() {
@@ -553,7 +426,7 @@ export default {
         email: row.email || '',
         password: '',
         confirmPassword: '',
-        groupIds: [1], // 模拟数据
+        groupIds: [1],
         roleIds: row.roles ? row.roles.map((r, i) => i + 1) : [],
         status: row.status,
         remark: row.remark || ''
@@ -577,9 +450,7 @@ export default {
       }
     },
     batchDelete() {
-      this.$confirm(`确定删除选中的 ${this.selectedRows.length} 个用户吗？`, '提示', {
-        type: 'warning'
-      }).then(() => {
+      this.$confirm(`确定删除选中的 ${this.selectedRows.length} 个用户吗？`, '提示', { type: 'warning' }).then(() => {
         const ids = this.selectedRows.map(row => row.id)
         this.tableData = this.tableData.filter(item => !ids.includes(item.id))
         this.total -= ids.length
@@ -595,9 +466,7 @@ export default {
       this.resetPwdUserId = row.id
       this.pwdForm = { newPassword: '', confirmPassword: '' }
       this.pwdDialogVisible = true
-      this.$nextTick(() => {
-        this.$refs.pwdForm && this.$refs.pwdForm.clearValidate()
-      })
+      this.$nextTick(() => { this.$refs.pwdForm && this.$refs.pwdForm.clearValidate() })
     },
     submitPwd() {
       this.$refs.pwdForm.validate(valid => {
@@ -626,21 +495,8 @@ export default {
       return { background: '#f5f7fa', fontWeight: 'bold', color: '#303133' }
     },
     resetForm() {
-      this.userForm = {
-        username: '',
-        nickname: '',
-        phone: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        groupIds: [],
-        roleIds: [],
-        status: 'enabled',
-        remark: ''
-      }
-      this.$nextTick(() => {
-        this.$refs.userForm && this.$refs.userForm.clearValidate()
-      })
+      this.userForm = { username: '', nickname: '', phone: '', email: '', password: '', confirmPassword: '', groupIds: [], roleIds: [], status: 'enabled', remark: '' }
+      this.$nextTick(() => { this.$refs.userForm && this.$refs.userForm.clearValidate() })
     },
     handleDialogClose() {
       this.resetForm()
@@ -654,11 +510,7 @@ export default {
             if (this.isEdit) {
               const index = this.tableData.findIndex(item => item.id === this.currentId)
               if (index > -1) {
-                this.tableData[index] = {
-                  ...this.tableData[index],
-                  ...this.userForm,
-                  updateTime: new Date().toLocaleString()
-                }
+                this.tableData[index] = { ...this.tableData[index], ...this.userForm, updateTime: new Date().toLocaleString() }
               }
               this.$message.success('修改成功')
             } else {
@@ -666,14 +518,8 @@ export default {
                 id: this.tableData.length + 1,
                 ...this.userForm,
                 createTime: new Date().toLocaleString(),
-                groups: this.userForm.groupIds.map(id => {
-                  const group = this.groupOptions.find(g => g.id === id)
-                  return group ? group.groupName : ''
-                }).filter(Boolean),
-                roles: this.userForm.roleIds.map(id => {
-                  const role = this.roleOptions.find(r => r.id === id)
-                  return role ? role.roleName : ''
-                }).filter(Boolean)
+                groups: this.userForm.groupIds.map(id => { const group = this.groupOptions.find(g => g.id === id); return group ? group.groupName : '' }).filter(Boolean),
+                roles: this.userForm.roleIds.map(id => { const role = this.roleOptions.find(r => r.id === id); return role ? role.roleName : '' }).filter(Boolean)
               }
               this.tableData.unshift(newUser)
               this.total++
@@ -695,49 +541,46 @@ export default {
   .search-card {
     margin-bottom: 16px;
     border-radius: 10px;
-  }
 
-  .search-form {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-
-    .el-form-item {
-      margin-right: 20px;
-      margin-bottom: 12px;
-    }
-
-    .search-btn-group {
-      display: flex;
-      align-items: center;
-      margin-left: auto;
-
-      button {
-        margin-left: 8px;
-      }
-
-      .toggle-advanced-btn {
-        display: flex;
-        align-items: center;
-        padding: 0;
-        font-size: 13px;
-        color: #409eff;
-
-        i {
-          margin-right: 2px;
-          font-size: 12px;
-        }
-      }
-    }
-
-    .advanced-search {
-      margin-top: 12px;
+    .search-form {
       display: flex;
       flex-wrap: wrap;
-      width: 100%;
+      align-items: center;
 
       .el-form-item {
         margin-right: 20px;
+        margin-bottom: 12px;
+      }
+
+      .search-btn-group {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+
+        button {
+          margin-left: 8px;
+        }
+
+        .toggle-advanced-btn {
+          color: #409eff;
+          display: flex;
+          align-items: center;
+
+          i {
+            margin-right: 4px;
+          }
+        }
+      }
+
+      .advanced-search {
+        margin-top: 12px;
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+
+        .el-form-item {
+          margin-right: 20px;
+        }
       }
     }
   }
@@ -754,8 +597,6 @@ export default {
 
       .add-btn {
         border: none !important;
-        background-color: #409eff20;
-        color: #409eff;
         font-weight: 500;
       }
 
@@ -791,26 +632,6 @@ export default {
           font-weight: 500;
         }
       }
-
-      .text-btn {
-        border: none;
-        background: transparent;
-        color: #409eff;
-        padding: 0 6px;
-      }
-
-      .text-btn:hover {
-        color: #66b1ff;
-        text-decoration: underline;
-      }
-
-      .danger {
-        color: #f56c6c;
-      }
-
-      .danger:hover {
-        color: #f78989;
-      }
     }
 
     .pagination-box {
@@ -826,7 +647,10 @@ export default {
   }
 }
 
-/* 高级搜索下拉动画 */
+.danger {
+  color: #ff4d4f;
+}
+
 .slide-fade-enter-active, .slide-fade-leave-active {
   transition: all 0.3s ease;
 }
@@ -834,5 +658,21 @@ export default {
   opacity: 0;
   max-height: 0;
   overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .user-page {
+    padding: 12px;
+
+    .search-card {
+      .search-form {
+        .search-btn-group {
+          margin-left: 0;
+          margin-top: 12px;
+          width: 100%;
+        }
+      }
+    }
+  }
 }
 </style>

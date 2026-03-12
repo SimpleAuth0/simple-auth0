@@ -82,55 +82,64 @@
         </div>
 
         <el-card class="config-card" shadow="never">
-          <el-form
-            ref="basicForm"
-            :model="form"
-            :rules="basicRules"
-            label-width="140px"
-            label-position="left"
-          >
-            <el-form-item label="身份源名称" prop="name">
-              <el-input
-                v-model="form.name"
-                placeholder="例如：公司主LDAP"
-                maxlength="50"
-                show-word-limit
-                style="max-width: 400px"
-              />
-            </el-form-item>
+          <div class="config-section">
+            <h3 class="section-title">
+              <i class="el-icon-info" />
+              基本信息
+            </h3>
+            <el-form
+              ref="basicForm"
+              :model="form"
+              :rules="basicRules"
+              label-width="120px"
+              label-position="right"
+              class="compact-form"
+            >
+              <el-row :gutter="24">
+                <el-col :span="12">
+                  <el-form-item label="身份源名称" prop="name">
+                    <el-input
+                      v-model="form.name"
+                      placeholder="例如：公司主LDAP"
+                      maxlength="50"
+                      show-word-limit
+                    />
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="标识" prop="code">
+                    <el-input
+                      v-model="form.code"
+                      placeholder="唯一标识，如 company-ldap"
+                      maxlength="30"
+                    >
+                      <template slot="prepend">idp_</template>
+                    </el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
 
-            <el-form-item label="标识" prop="code">
-              <el-input
-                v-model="form.code"
-                placeholder="唯一标识，如 company-ldap"
-                maxlength="30"
-                style="max-width: 400px"
-              >
-                <template slot="prepend">idp_</template>
-              </el-input>
-            </el-form-item>
+              <el-form-item label="描述" prop="desc" class="full-width-item">
+                <el-input
+                  v-model="form.desc"
+                  type="textarea"
+                  :rows="2"
+                  placeholder="描述该身份源的用途，方便其他管理员理解"
+                  maxlength="200"
+                  show-word-limit
+                />
+              </el-form-item>
 
-            <el-form-item label="描述" prop="desc">
-              <el-input
-                v-model="form.desc"
-                type="textarea"
-                :rows="3"
-                placeholder="描述该身份源的用途"
-                maxlength="200"
-                show-word-limit
-                style="max-width: 500px"
-              />
-            </el-form-item>
-
-            <el-form-item label="状态">
-              <el-switch
-                v-model="form.enabled"
-                active-text="启用"
-                inactive-text="禁用"
-              />
-              <div class="form-tip">创建后是否立即启用该身份源</div>
-            </el-form-item>
-          </el-form>
+              <el-form-item label="状态" class="switch-item">
+                <el-switch
+                  v-model="form.enabled"
+                  active-text="启用"
+                  inactive-text="禁用"
+                />
+                <span class="form-tip-text">创建后立即启用该身份源</span>
+              </el-form-item>
+            </el-form>
+          </div>
         </el-card>
       </div>
 
@@ -154,10 +163,11 @@
                 ref="ldapForm"
                 :model="form"
                 :rules="ldapRules"
-                label-width="160px"
-                label-position="left"
+                label-width="120px"
+                label-position="right"
+                class="compact-form"
               >
-                <el-row :gutter="20">
+                <el-row :gutter="24">
                   <el-col :span="12">
                     <el-form-item label="服务器地址" prop="server">
                       <el-input
@@ -174,14 +184,14 @@
                 </el-row>
 
                 <el-form-item label="连接方式">
-                  <el-radio-group v-model="form.connectionType">
-                    <el-radio label="plain">普通连接</el-radio>
-                    <el-radio label="ssl">SSL/TLS</el-radio>
-                    <el-radio label="starttls">STARTTLS</el-radio>
+                  <el-radio-group v-model="form.connectionType" size="small">
+                    <el-radio-button label="plain">普通连接</el-radio-button>
+                    <el-radio-button label="ssl">SSL/TLS</el-radio-button>
+                    <el-radio-button label="starttls">STARTTLS</el-radio-button>
                   </el-radio-group>
                 </el-form-item>
 
-                <el-row :gutter="20">
+                <el-row :gutter="24">
                   <el-col :span="12">
                     <el-form-item label="Base DN" prop="baseDN">
                       <el-input v-model="form.baseDN" placeholder="dc=example,dc=com" />
@@ -196,8 +206,6 @@
               </el-form>
             </div>
 
-            <el-divider />
-
             <div class="config-section">
               <h3 class="section-title">
                 <i class="el-icon-user-solid" />
@@ -206,39 +214,50 @@
 
               <el-form
                 :model="form"
-                label-width="160px"
-                label-position="left"
+                label-width="120px"
+                label-position="right"
+                class="compact-form"
               >
-                <el-form-item label="管理员 DN" prop="bindDN">
-                  <el-input v-model="form.bindDN" placeholder="cn=admin,dc=example,dc=com" />
-                </el-form-item>
+                <el-row :gutter="24">
+                  <el-col :span="12">
+                    <el-form-item label="管理员 DN" prop="bindDN">
+                      <el-input v-model="form.bindDN" placeholder="cn=admin,dc=example,dc=com" />
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-form-item label="管理员密码" prop="password">
+                      <el-input v-model="form.password" show-password placeholder="输入管理员密码" />
+                    </el-form-item>
+                  </el-col>
+                </el-row>
 
-                <el-form-item label="管理员密码" prop="password">
-                  <el-input v-model="form.password" show-password placeholder="输入管理员密码" />
-                </el-form-item>
-
-                <el-form-item>
+                <el-form-item class="toggle-advanced-item">
                   <el-button type="text" @click="showAdvanced = !showAdvanced">
-                    {{ showAdvanced ? '收起' : '展开' }}高级配置
                     <i :class="showAdvanced ? 'el-icon-arrow-up' : 'el-icon-arrow-down'" />
+                    {{ showAdvanced ? '收起' : '展开' }}高级配置
                   </el-button>
                 </el-form-item>
 
                 <template v-if="showAdvanced">
-                  <el-form-item label="连接超时">
-                    <el-input-number v-model="form.timeout" :min="1" :max="60" />
-                    <span class="unit">秒</span>
-                  </el-form-item>
-
-                  <el-form-item label="同步频率">
-                    <el-select v-model="form.syncInterval" style="width: 200px">
-                      <el-option label="手动同步" value="manual" />
-                      <el-option label="每小时" value="1h" />
-                      <el-option label="每6小时" value="6h" />
-                      <el-option label="每12小时" value="12h" />
-                      <el-option label="每天" value="24h" />
-                    </el-select>
-                  </el-form-item>
+                  <el-row :gutter="24">
+                    <el-col :span="12">
+                      <el-form-item label="连接超时">
+                        <el-input-number v-model="form.timeout" :min="1" :max="60" />
+                        <span class="unit">秒</span>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                      <el-form-item label="同步频率">
+                        <el-select v-model="form.syncInterval" style="width: 100%">
+                          <el-option label="手动同步" value="manual" />
+                          <el-option label="每小时" value="1h" />
+                          <el-option label="每6小时" value="6h" />
+                          <el-option label="每12小时" value="12h" />
+                          <el-option label="每天" value="24h" />
+                        </el-select>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
                 </template>
               </el-form>
             </div>
@@ -256,14 +275,15 @@
                 ref="oidcForm"
                 :model="form"
                 :rules="oidcRules"
-                label-width="160px"
-                label-position="left"
+                label-width="120px"
+                label-position="right"
+                class="compact-form"
               >
                 <el-form-item label="Issuer URL" prop="issuer">
                   <el-input v-model="form.issuer" placeholder="https://idp.example.com" />
                 </el-form-item>
 
-                <el-row :gutter="20">
+                <el-row :gutter="24">
                   <el-col :span="12">
                     <el-form-item label="Client ID" prop="clientId">
                       <el-input v-model="form.clientId" placeholder="输入Client ID" />
@@ -277,20 +297,20 @@
                 </el-row>
 
                 <el-form-item label="Scope">
-                  <el-checkbox-group v-model="form.scopes">
-                    <el-checkbox label="openid">openid</el-checkbox>
-                    <el-checkbox label="profile">profile</el-checkbox>
-                    <el-checkbox label="email">email</el-checkbox>
-                    <el-checkbox label="phone">phone</el-checkbox>
-                    <el-checkbox label="address">address</el-checkbox>
+                  <el-checkbox-group v-model="form.scopes" size="small">
+                    <el-checkbox-button label="openid">openid</el-checkbox-button>
+                    <el-checkbox-button label="profile">profile</el-checkbox-button>
+                    <el-checkbox-button label="email">email</el-checkbox-button>
+                    <el-checkbox-button label="phone">phone</el-checkbox-button>
+                    <el-checkbox-button label="address">address</el-checkbox-button>
                   </el-checkbox-group>
                 </el-form-item>
 
-                <el-form-item label="回调地址">
+                <el-form-item label="回调地址" class="copy-field-item">
                   <el-input :value="callbackUrl" readonly>
                     <el-button slot="append" icon="el-icon-document-copy" @click="copyCallback">复制</el-button>
                   </el-input>
-                  <div class="form-tip">请在您的IdP中将此地址配置为允许的回调地址</div>
+                  <span class="form-tip-text">请在您的IdP中将此地址配置为允许的回调地址</span>
                 </el-form-item>
               </el-form>
             </div>
@@ -308,13 +328,14 @@
                 ref="samlForm"
                 :model="form"
                 :rules="samlRules"
-                label-width="160px"
-                label-position="left"
+                label-width="120px"
+                label-position="right"
+                class="compact-form"
               >
                 <el-form-item label="配置方式">
-                  <el-radio-group v-model="form.samlConfigType">
-                    <el-radio label="url">Metadata URL</el-radio>
-                    <el-radio label="manual">手动配置</el-radio>
+                  <el-radio-group v-model="form.samlConfigType" size="small">
+                    <el-radio-button label="url">Metadata URL</el-radio-button>
+                    <el-radio-button label="manual">手动配置</el-radio-button>
                   </el-radio-group>
                 </el-form-item>
 
@@ -343,15 +364,15 @@
                   </el-form-item>
                 </template>
 
-                <el-divider />
+                <div class="config-section-sp"></div>
 
-                <el-form-item label="SP Entity ID">
+                <el-form-item label="SP Entity ID" class="copy-field-item">
                   <el-input :value="spEntityId" readonly>
                     <el-button slot="append" icon="el-icon-document-copy" @click="copyEntityId">复制</el-button>
                   </el-input>
                 </el-form-item>
 
-                <el-form-item label="ACS URL">
+                <el-form-item label="ACS URL" class="copy-field-item">
                   <el-input :value="acsUrl" readonly>
                     <el-button slot="append" icon="el-icon-document-copy" @click="copyAcsUrl">复制</el-button>
                   </el-input>
@@ -1044,34 +1065,119 @@ export default {
     border: 1px solid #e8e8e8;
 
     ::v-deep .el-card__body {
-      padding: 24px;
+      padding: 28px 32px;
     }
 
     .config-section {
+      &:not(:last-child) {
+        margin-bottom: 32px;
+        padding-bottom: 32px;
+        border-bottom: 1px solid #f0f0f0;
+      }
+
       .section-title {
-        font-size: 16px;
+        font-size: 15px;
         font-weight: 600;
         margin: 0 0 20px 0;
         display: flex;
         align-items: center;
         gap: 8px;
-        color: #333;
+        color: #262626;
 
         i {
           color: #1890ff;
+          font-size: 16px;
+        }
+      }
+    }
+
+    .compact-form {
+      .el-form-item {
+        margin-bottom: 20px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        .el-form-item__label {
+          font-size: 14px;
+          color: #595959;
+          font-weight: 500;
+          padding-right: 16px;
+        }
+
+        .el-form-item__content {
+          line-height: 32px;
+        }
+      }
+
+      .full-width-item {
+        .el-input,
+        .el-textarea {
+          width: 100%;
+        }
+      }
+
+      .switch-item {
+        .el-form-item__content {
+          display: flex;
+          align-items: center;
+          gap: 12px;
         }
       }
     }
 
     .form-tip {
       font-size: 12px;
-      color: #999;
+      color: #8c8c8c;
       margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    .form-tip-text {
+      font-size: 13px;
+      color: #8c8c8c;
+      margin-left: 8px;
+    }
+
+    .toggle-advanced-item {
+      margin-top: 8px;
+
+      .el-button--text {
+        font-size: 13px;
+        color: #595959;
+
+        i {
+          margin-right: 4px;
+        }
+
+        &:hover {
+          color: #1890ff;
+        }
+      }
+    }
+
+    .copy-field-item {
+      .el-input-group__append {
+        background: #fff;
+        padding: 0 12px;
+
+        .el-button {
+          color: #1890ff;
+        }
+      }
+    }
+
+    .config-section-sp {
+      height: 16px;
+      border-top: 1px solid #f0f0f0;
+      margin: 20px 0;
     }
 
     .unit {
       margin-left: 8px;
-      color: #666;
+      color: #595959;
+      font-size: 13px;
     }
   }
 

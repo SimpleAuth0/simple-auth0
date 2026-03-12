@@ -6,11 +6,6 @@
         <h1 class="page-title">企业身份源</h1>
         <p class="page-desc">连接和管理 LDAP、Active Directory、OIDC、SAML 等企业身份源，实现统一身份认证</p>
       </div>
-      <div class="header-right">
-        <el-button type="primary" icon="el-icon-plus" size="medium" @click="goCreate">
-          新建连接
-        </el-button>
-      </div>
     </div>
 
     <!-- 统计卡片 -->
@@ -183,7 +178,7 @@
 
     <!-- 列表视图 -->
     <el-card v-else class="list-view" shadow="never">
-      <el-table :data="filteredList" style="width: 100%" v-loading="loading">
+      <el-table v-loading="loading" :data="filteredList" style="width: 100%">
         <el-table-column label="身份源" min-width="250">
           <template slot-scope="{ row }">
             <div class="source-info">
@@ -265,208 +260,208 @@
 
 <script>
 export default {
-  name: "IdentitySourcePage",
+  name: 'IdentitySourcePage',
 
   data() {
     return {
       loading: false,
-      searchQuery: "",
-      filterType: "",
-      filterStatus: "",
-      viewMode: "card", // card | list
+      searchQuery: '',
+      filterType: '',
+      filterStatus: '',
+      viewMode: 'card', // card | list
 
       list: [
         {
           id: 1,
-          name: "公司 LDAP 服务器",
-          type: "LDAP",
-          status: "connected",
+          name: '公司 LDAP 服务器',
+          type: 'LDAP',
+          status: 'connected',
           users: 324,
           groups: 28,
-          updateTime: "2025-02-12 14:22:30",
-          description: "总部主LDAP服务器"
+          updateTime: '2025-02-12 14:22:30',
+          description: '总部主LDAP服务器'
         },
         {
           id: 2,
-          name: "总部 Active Directory",
-          type: "Active Directory",
-          status: "connected",
+          name: '总部 Active Directory',
+          type: 'Active Directory',
+          status: 'connected',
           users: 1124,
           groups: 156,
-          updateTime: "2025-02-12 13:10:15",
-          description: "Windows域控制器"
+          updateTime: '2025-02-12 13:10:15',
+          description: 'Windows域控制器'
         },
         {
           id: 3,
-          name: "Ping Identity OIDC",
-          type: "OIDC",
-          status: "error",
+          name: 'Ping Identity OIDC',
+          type: 'OIDC',
+          status: 'error',
           users: 0,
           groups: 0,
-          updateTime: "2025-02-01 09:15:00",
-          description: "外部OIDC提供商"
+          updateTime: '2025-02-01 09:15:00',
+          description: '外部OIDC提供商'
         },
         {
           id: 4,
-          name: "企业 SAML SSO",
-          type: "SAML",
-          status: "connected",
+          name: '企业 SAML SSO',
+          type: 'SAML',
+          status: 'connected',
           users: 234,
           groups: 12,
-          updateTime: "2025-02-10 09:30:45",
-          description: "企业统一登录"
+          updateTime: '2025-02-10 09:30:45',
+          description: '企业统一登录'
         },
         {
           id: 5,
-          name: "分部 LDAP",
-          type: "LDAP",
-          status: "disconnected",
+          name: '分部 LDAP',
+          type: 'LDAP',
+          status: 'disconnected',
           users: 0,
           groups: 0,
-          updateTime: "2025-01-15 16:20:00",
-          description: "上海分部LDAP"
+          updateTime: '2025-01-15 16:20:00',
+          description: '上海分部LDAP'
         }
       ]
-    };
+    }
   },
 
   computed: {
     filteredList() {
-      let result = this.list;
+      let result = this.list
 
       if (this.searchQuery) {
         result = result.filter(item =>
           item.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-        );
+        )
       }
 
       if (this.filterType) {
-        result = result.filter(item => item.type === this.filterType);
+        result = result.filter(item => item.type === this.filterType)
       }
 
       if (this.filterStatus) {
-        result = result.filter(item => item.status === this.filterStatus);
+        result = result.filter(item => item.status === this.filterStatus)
       }
 
-      return result;
+      return result
     },
 
     connectedCount() {
-      return this.list.filter(item => item.status === "connected").length;
+      return this.list.filter(item => item.status === 'connected').length
     },
 
     totalUsers() {
-      return this.list.reduce((sum, item) => sum + (item.users || 0), 0);
+      return this.list.reduce((sum, item) => sum + (item.users || 0), 0)
     },
 
     lastSyncTime() {
-      const connected = this.list.filter(item => item.status === "connected");
-      if (connected.length === 0) return "-";
+      const connected = this.list.filter(item => item.status === 'connected')
+      if (connected.length === 0) return '-'
 
       const latest = connected.sort((a, b) =>
         new Date(b.updateTime) - new Date(a.updateTime)
-      )[0];
-      return this.formatTime(latest.updateTime);
+      )[0]
+      return this.formatTime(latest.updateTime)
     }
   },
 
   methods: {
     getTypeClass(type) {
       const map = {
-        "LDAP": "ldap",
-        "Active Directory": "ad",
-        "OIDC": "oidc",
-        "SAML": "saml"
-      };
-      return map[type] || "default";
+        'LDAP': 'ldap',
+        'Active Directory': 'ad',
+        'OIDC': 'oidc',
+        'SAML': 'saml'
+      }
+      return map[type] || 'default'
     },
 
     getTypeIcon(type) {
       const map = {
-        "LDAP": "el-icon-s-cooperation",
-        "Active Directory": "el-icon-s-platform",
-        "OIDC": "el-icon-link",
-        "SAML": "el-icon-key"
-      };
-      return map[type] || "el-icon-s-tools";
+        'LDAP': 'el-icon-s-cooperation',
+        'Active Directory': 'el-icon-s-platform',
+        'OIDC': 'el-icon-link',
+        'SAML': 'el-icon-key'
+      }
+      return map[type] || 'el-icon-s-tools'
     },
 
     getStatusText(status) {
       const map = {
-        "connected": "已连接",
-        "disconnected": "未连接",
-        "error": "连接失败"
-      };
-      return map[status] || status;
+        'connected': '已连接',
+        'disconnected': '未连接',
+        'error': '连接失败'
+      }
+      return map[status] || status
     },
 
     formatTime(time) {
-      if (!time) return "-";
-      const date = new Date(time);
-      const now = new Date();
-      const diff = Math.floor((now - date) / 1000 / 60); // minutes
+      if (!time) return '-'
+      const date = new Date(time)
+      const now = new Date()
+      const diff = Math.floor((now - date) / 1000 / 60) // minutes
 
-      if (diff < 1) return "刚刚";
-      if (diff < 60) return `${diff}分钟前`;
-      if (diff < 1440) return `${Math.floor(diff / 60)}小时前`;
-      return `${Math.floor(diff / 1440)}天前`;
+      if (diff < 1) return '刚刚'
+      if (diff < 60) return `${diff}分钟前`
+      if (diff < 1440) return `${Math.floor(diff / 60)}小时前`
+      return `${Math.floor(diff / 1440)}天前`
     },
 
     goCreate() {
-      this.$router.push("/identity/create");
+      this.$router.push('/identity/create')
     },
 
     edit(row) {
-      this.$message.info(`编辑：${row.name}`);
+      this.$message.info(`编辑：${row.name}`)
     },
 
     sync(row) {
-      this.$message.success(`已启动同步：${row.name}`);
+      this.$message.success(`已启动同步：${row.name}`)
       // 模拟同步完成
       setTimeout(() => {
-        row.updateTime = new Date().toISOString();
-        this.$message.success(`${row.name} 同步完成`);
-      }, 2000);
+        row.updateTime = new Date().toISOString()
+        this.$message.success(`${row.name} 同步完成`)
+      }, 2000)
     },
 
     reconnect(row) {
-      this.$message.info(`正在重新连接：${row.name}`);
+      this.$message.info(`正在重新连接：${row.name}`)
       setTimeout(() => {
-        row.status = "connected";
-        this.$message.success(`${row.name} 连接成功`);
-      }, 1500);
+        row.status = 'connected'
+        this.$message.success(`${row.name} 连接成功`)
+      }, 1500)
     },
 
     testConnection(row) {
-      this.$message.info(`正在测试连接：${row.name}`);
+      this.$message.info(`正在测试连接：${row.name}`)
       setTimeout(() => {
-        if (row.status === "connected") {
-          this.$message.success("连接测试成功");
+        if (row.status === 'connected') {
+          this.$message.success('连接测试成功')
         } else {
-          this.$message.error("连接测试失败，请检查配置");
+          this.$message.error('连接测试失败，请检查配置')
         }
-      }, 1000);
+      }, 1000)
     },
 
     viewLogs(row) {
-      this.$message.info(`查看 ${row.name} 的同步日志`);
+      this.$message.info(`查看 ${row.name} 的同步日志`)
     },
 
     remove(row) {
-      this.$confirm(`确定删除 "${row.name}" 吗？删除后将无法恢复。`, "删除确认", {
-        confirmButtonText: "删除",
-        cancelButtonText: "取消",
-        type: "warning"
+      this.$confirm(`确定删除 "${row.name}" 吗？删除后将无法恢复。`, '删除确认', {
+        confirmButtonText: '删除',
+        cancelButtonText: '取消',
+        type: 'warning'
       }).then(() => {
-        const index = this.list.findIndex(item => item.id === row.id);
+        const index = this.list.findIndex(item => item.id === row.id)
         if (index > -1) {
-          this.list.splice(index, 1);
-          this.$message.success("已删除");
+          this.list.splice(index, 1)
+          this.$message.success('已删除')
         }
-      });
+      })
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

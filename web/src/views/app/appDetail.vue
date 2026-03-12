@@ -287,7 +287,7 @@
           <!-- 头部标题 -->
           <div class="section-header">
             <h3 class="section-title">管理对 API 资源的访问</h3>
-            <el-button type="primary" icon="el-icon-plus" @click="openApiAuthDialog">授权API资源</el-button>
+            <el-button size="small" type="primary" icon="el-icon-plus" @click="openApiAuthDialog">授权API资源</el-button>
           </div>
 
           <!-- 已授权的API资源列表 -->
@@ -296,11 +296,11 @@
               <span>已授权的API资源</span>
             </div>
 
-            <el-table :data="authorizedApis" style="width: 100%" v-loading="apiAuthLoading">
+            <el-table v-loading="apiAuthLoading" :data="authorizedApis" style="width: 100%">
               <el-table-column prop="apiName" label="API资源名称" min-width="150">
                 <template slot-scope="{ row }">
                   <div class="api-name-cell">
-                    <i class="el-icon-s-operation" style="margin-right: 8px; color: #409eff;"></i>
+                    <i class="el-icon-s-operation" style="margin-right: 8px; color: #409eff;" />
                     <span>{{ row.apiName }}</span>
                   </div>
                 </template>
@@ -366,7 +366,7 @@
           <el-card class="config-card role-card" shadow="never">
             <div slot="header">
               <span>分配的角色</span>
-              <el-button type="primary" size="small" icon="el-icon-plus" @click="openRoleDialog" style="float: right;">添加角色</el-button>
+              <el-button type="primary" size="small" icon="el-icon-plus" style="float: right;" @click="openRoleDialog">添加角色</el-button>
             </div>
 
             <el-table :data="assignedRoles" style="width: 100%">
@@ -407,7 +407,7 @@
 
     <!-- API授权添加/编辑弹窗 -->
     <el-dialog :title="isEditApiAuth ? '编辑API授权' : '授权API资源'" :visible.sync="apiAuthDialogVisible" width="600px">
-      <el-form :model="apiAuthForm" label-width="120px" :rules="apiAuthRules" ref="apiAuthForm">
+      <el-form ref="apiAuthForm" :model="apiAuthForm" label-width="120px" :rules="apiAuthRules">
         <el-form-item label="API资源" prop="apiId">
           <el-select v-model="apiAuthForm.apiId" placeholder="选择API资源" style="width: 100%" :disabled="isEditApiAuth">
             <el-option
@@ -445,7 +445,7 @@
 
     <!-- 添加角色弹窗 -->
     <el-dialog title="添加角色" :visible.sync="roleDialogVisible" width="500px">
-      <el-form :model="roleForm" label-width="100px" :rules="roleRules" ref="roleForm">
+      <el-form ref="roleForm" :model="roleForm" label-width="100px" :rules="roleRules">
         <el-form-item label="选择角色" prop="roleId">
           <el-select v-model="roleForm.roleId" placeholder="选择要分配的角色" style="width: 100%">
             <el-option

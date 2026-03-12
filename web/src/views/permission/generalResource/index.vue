@@ -1,10 +1,18 @@
 <template>
   <div class="general-resource-page">
+    <!-- 页面头部 -->
+    <div class="page-header">
+      <div class="header-content">
+        <div class="title-section">
+          <h1 class="page-title">常规资源</h1>
+          <p class="page-desc">管理系统菜单、按钮和页面元素等常规资源</p>
+        </div>
+      </div>
+    </div>
 
     <!-- 搜索区 -->
     <el-card class="search-card" shadow="hover">
       <el-form :inline="true" :model="searchForm" size="small" class="search-form">
-
         <el-form-item label="资源名称">
           <el-input v-model="searchForm.name" placeholder="请输入资源名称" clearable />
         </el-form-item>
@@ -18,25 +26,16 @@
         </el-form-item>
 
         <div class="search-btn-group">
-          <el-button type="primary" icon="el-icon-search" size="mini" @click="search">查询</el-button>
+          <el-button size="mini" type="primary" icon="el-icon-search" @click="search">查询</el-button>
           <el-button size="mini" icon="el-icon-refresh" @click="reset">重置</el-button>
         </div>
-
       </el-form>
     </el-card>
 
-    <!-- 列表卡片 -->
+    <!-- 树形表格 -->
     <el-card class="table-card" shadow="hover">
-
-      <!-- 顶部操作行 -->
       <div class="table-header-bar">
-        <el-button
-          size="small"
-          type="primary"
-          icon="el-icon-plus"
-          class="add-btn"
-          @click="addResource"
-        >
+        <el-button size="small" type="primary" icon="el-icon-plus" @click="addResource">
           新增资源
         </el-button>
         <el-button
@@ -51,10 +50,9 @@
         </el-button>
       </div>
 
-      <!-- 树形表格 -->
       <el-table
         v-loading="loading"
-        :data="tableData"
+        :data="filteredTableData"
         class="resource-table"
         :header-cell-style="tableHeaderStyle"
         row-key="id"
@@ -65,7 +63,7 @@
         <el-table-column type="selection" width="55" />
         <el-table-column prop="name" label="资源名称" min-width="200">
           <template slot-scope="{ row }">
-            <i :class="getResourceIcon(row.type)" style="margin-right: 8px; color: #909399;" />
+            <i :class="getResourceIcon(row.type)" style="margin-right: 8px; color: #909399" />
             <span>{{ row.name }}</span>
           </template>
         </el-table-column>
@@ -84,23 +82,24 @@
         <el-table-column prop="sort" label="排序" width="80" align="center" />
         <el-table-column prop="status" label="状态" width="80">
           <template slot-scope="{ row }">
-            <el-switch v-model="row.status" active-value="enabled" inactive-value="disabled" @change="handleStatusChange(row)" />
+            <el-switch
+              v-model="row.status"
+              active-value="enabled"
+              inactive-value="disabled"
+              @change="handleStatusChange(row)"
+            />
           </template>
         </el-table-column>
         <el-table-column label="操作" width="180" fixed="right">
           <template slot-scope="{ row }">
             <el-button size="mini" type="text" icon="el-icon-plus" @click="addChild(row)">添加子项</el-button>
             <el-button size="mini" type="text" icon="el-icon-edit" @click="editResource(row)">编辑</el-button>
-            <el-popconfirm
-              title="确定删除该资源吗？"
-              @confirm="deleteResource(row)"
-            >
+            <el-popconfirm title="确定删除该资源吗？" @confirm="deleteResource(row)">
               <el-button slot="reference" size="mini" type="text" class="danger" icon="el-icon-delete">删除</el-button>
             </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
-
     </el-card>
 
     <!-- 新增/编辑资源对话框 -->
@@ -149,7 +148,7 @@
           <el-input v-model="resourceForm.path" placeholder="菜单填路由，按钮填权限标识" />
         </el-form-item>
 
-        <el-form-item label="图标" v-if="resourceForm.type === 'menu'">
+        <el-form-item v-if="resourceForm.type === 'menu'" label="图标">
           <el-input v-model="resourceForm.icon" placeholder="请输入图标类名，如：el-icon-user" />
         </el-form-item>
 
@@ -175,7 +174,6 @@
         <el-button type="primary" :loading="submitLoading" @click="submitForm">确 定</el-button>
       </div>
     </el-dialog>
-
   </div>
 </template>
 
@@ -239,15 +237,11 @@ export default {
         }
       ],
       selectedRows: [],
-
-      // 对话框
       dialogVisible: false,
       dialogTitle: '新增资源',
       isEdit: false,
       submitLoading: false,
       currentId: null,
-
-      // 表单
       resourceForm: {
         parentId: null,
         type: 'menu',
@@ -259,29 +253,46 @@ export default {
         status: 'enabled'
       },
       resourceRules: {
-        type: [
-          { required: true, message: '请选择资源类型', trigger: 'change' }
-        ],
-        name: [
-          { required: true, message: '请输入资源名称', trigger: 'blur' }
-        ],
-        code: [
-          { required: true, message: '请输入资源编码', trigger: 'blur' }
-        ]
+        type: [{ required: true, message: '请选择资源类型', trigger: 'change' }],
+        name: [{ required: true, message: '请输入资源名称', trigger: 'blur' }],
+        code: [{ required: true, message: '请输入资源编码', trigger: 'blur' }]
       },
       resourceOptions: []
+    }
+  },
+  computed: {
+    filteredTableData() {
+      if (!this.searchForm.name && !this.searchForm.type) {
+        return this.tableData
+      }
+      return this.filterTree(this.tableData)
     }
   },
   mounted() {
     this.generateResourceOptions()
   },
   methods: {
+    filterTree(data) {
+      return data.filter(item => {
+        let match = true
+        if (this.searchForm.name) {
+          match = item.name.toLowerCase().includes(this.searchForm.name.toLowerCase())
+        }
+        if (this.searchForm.type && match) {
+          match = item.type === this.searchForm.type
+        }
+        if (item.children && item.children.length) {
+          item.children = this.filterTree(item.children)
+          if (item.children.length) match = true
+        }
+        return match
+      })
+    },
     search() {
       this.loading = true
       setTimeout(() => {
         this.loading = false
-        this.$message.success('查询成功')
-      }, 500)
+      }, 300)
     },
     reset() {
       this.searchForm = { name: '', type: '' }
@@ -324,10 +335,12 @@ export default {
     batchDelete() {
       this.$confirm(`确定删除选中的 ${this.selectedRows.length} 个资源吗？`, '提示', {
         type: 'warning'
-      }).then(() => {
-        this.selectedRows = []
-        this.$message.success('批量删除成功')
-      }).catch(() => {})
+      })
+        .then(() => {
+          this.selectedRows = []
+          this.$message.success('批量删除成功')
+        })
+        .catch(() => {})
     },
     handleStatusChange(row) {
       const statusText = row.status === 'enabled' ? '启用' : '禁用'
@@ -335,23 +348,22 @@ export default {
     },
     getResourceIcon(type) {
       const iconMap = {
-        'menu': 'el-icon-folder-opened',
-        'button': 'el-icon-mouse',
-        'element': 'el-icon-s-operation'
+        menu: 'el-icon-folder-opened',
+        button: 'el-icon-mouse',
+        element: 'el-icon-s-operation'
       }
       return iconMap[type] || 'el-icon-question'
     },
     getTypeTag(type) {
-      const tagMap = { 'menu': '', 'button': 'success', 'element': 'warning' }
+      const tagMap = { menu: '', button: 'success', element: 'warning' }
       return tagMap[type] || 'info'
     },
     getTypeText(type) {
-      const textMap = { 'menu': '菜单', 'button': '按钮', 'element': '页面元素' }
+      const textMap = { menu: '菜单', button: '按钮', element: '页面元素' }
       return textMap[type] || type
     },
     generateResourceOptions() {
-      // 生成级联选择器的数据
-      const flatten = (data) => {
+      const flatten = data => {
         return data.map(item => {
           const result = { id: item.id, name: item.name }
           if (item.children && item.children.length) {
@@ -404,54 +416,73 @@ export default {
 
 <style lang="scss" scoped>
 .general-resource-page {
-  padding: 20px;
+  padding: 24px;
+
+  // 页面头部
+  .page-header {
+    margin-bottom: 24px;
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+
+      .title-section {
+        .page-title {
+          font-size: 24px;
+          font-weight: 600;
+          color: #1a1a1a;
+          margin: 0 0 8px 0;
+        }
+
+        .page-desc {
+          font-size: 14px;
+          color: #666;
+          margin: 0;
+        }
+      }
+
+      .header-actions {
+        display: flex;
+        gap: 12px;
+      }
+    }
+  }
 
   .search-card {
     margin-bottom: 16px;
-    border-radius: 10px;
-  }
+    border-radius: 12px;
 
-  .search-form {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-
-    .el-form-item {
-      margin-right: 20px;
-      margin-bottom: 12px;
-    }
-
-    .search-btn-group {
+    .search-form {
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
-      margin-left: auto;
 
-      button {
-        margin-left: 8px;
+      .el-form-item {
+        margin-right: 20px;
+        margin-bottom: 0;
+      }
+
+      .search-btn-group {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+
+        button {
+          margin-left: 8px;
+        }
       }
     }
   }
 
   .table-card {
-    border-radius: 10px;
-    padding-bottom: 10px;
+    border-radius: 12px;
 
     .table-header-bar {
       display: flex;
       justify-content: flex-start;
       gap: 10px;
-      margin-bottom: 12px;
-
-      .add-btn {
-        border: none !important;
-        background-color: #409eff20;
-        color: #409eff;
-        font-weight: 500;
-      }
-
-      .add-btn:hover {
-        background-color: #409eff30;
-      }
+      margin-bottom: 16px;
     }
 
     .resource-table {
@@ -486,10 +517,22 @@ export default {
 }
 
 .danger {
-  color: #f56c6c;
+  color: #ff4d4f;
 }
 
-.danger:hover {
-  color: #f78989;
+@media (max-width: 768px) {
+  .general-resource-page {
+    padding: 16px;
+
+    .search-card {
+      .search-form {
+        .search-btn-group {
+          margin-left: 0;
+          margin-top: 12px;
+          width: 100%;
+        }
+      }
+    }
+  }
 }
 </style>

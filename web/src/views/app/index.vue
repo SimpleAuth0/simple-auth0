@@ -65,7 +65,6 @@
 
         <el-table-column label="操作" width="200">
           <template slot-scope="{ row }">
-            <el-button size="mini" type="text" @click="detailApp(row)">详情</el-button>
             <el-button size="mini" type="text" @click="editApp(row)">编辑</el-button>
             <el-button size="mini" type="text" @click="enableApp(row)">禁用</el-button>
             <el-button size="mini" type="text" class="danger" @click="deleteApp(row)">删除</el-button>
@@ -128,16 +127,12 @@ export default {
       this.$router.push('/app/create')
     },
 
-    detailApp(appId) {
+    editApp(appId) {
       this.$router.push({
         name: 'AppDetail',
         params: { id: appId },
         query: { from: 'create' }
       })
-    },
-
-    editApp(app) {
-      this.$message.info('打开编辑应用：' + app.name)
     },
 
     enableApp(app) {

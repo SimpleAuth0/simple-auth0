@@ -7,18 +7,18 @@
 
         <!-- 常规搜索 -->
         <el-form-item label="用户组名称">
-          <el-input v-model="searchForm.groupName" placeholder="请输入用户组名称" clearable/>
+          <el-input v-model="searchForm.groupName" placeholder="请输入用户组名称" clearable />
         </el-form-item>
 
         <el-form-item label="描述">
-          <el-input v-model="searchForm.description" placeholder="请输入描述" clearable/>
+          <el-input v-model="searchForm.description" placeholder="请输入描述" clearable />
         </el-form-item>
 
         <div class="search-btn-group">
           <el-button type="primary" icon="el-icon-search" size="mini" @click="search">查询</el-button>
           <el-button size="mini" icon="el-icon-refresh" @click="reset">重置</el-button>
           <el-button size="mini" type="text" class="toggle-advanced-btn" @click="toggleAdvanced">
-            <i :class="showAdvanced ? 'el-icon-arrow-up' : 'el-icon-arrow-down'"></i>
+            <i :class="showAdvanced ? 'el-icon-arrow-up' : 'el-icon-arrow-down'" />
             高级搜索
           </el-button>
         </div>
@@ -76,23 +76,23 @@
         :header-cell-style="tableHeaderStyle"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column type="selection" width="55"/>
-        <el-table-column prop="id" label="ID" width="80"/>
+        <el-table-column type="selection" width="55" />
+        <el-table-column prop="id" label="ID" width="80" />
         <el-table-column prop="groupName" label="用户组名称" min-width="150">
           <template slot-scope="{ row }">
             <div class="group-name-cell">
-              <el-avatar :size="32" icon="el-icon-user-solid" class="group-avatar"/>
+              <el-avatar :size="32" icon="el-icon-user-solid" class="group-avatar" />
               <span class="group-name">{{ row.groupName }}</span>
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="description" label="描述" min-width="200" show-overflow-tooltip/>
+        <el-table-column prop="description" label="描述" min-width="200" show-overflow-tooltip />
         <el-table-column prop="memberCount" label="成员数" width="100">
           <template slot-scope="{ row }">
             <el-button type="text" @click="viewMembers(row)">{{ row.memberCount }}</el-button>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" label="创建时间" width="160"/>
+        <el-table-column prop="createTime" label="创建时间" width="160" />
         <el-table-column label="操作" width="200" fixed="right">
           <template slot-scope="{ row }">
             <el-button size="mini" type="text" icon="el-icon-edit" @click="editGroup(row)">编辑</el-button>
@@ -139,7 +139,7 @@
         class="group-form"
       >
         <el-form-item label="组名称" prop="groupName">
-          <el-input v-model="groupForm.groupName" placeholder="请输入用户组名称" maxlength="50" show-word-limit/>
+          <el-input v-model="groupForm.groupName" placeholder="请输入用户组名称" maxlength="50" show-word-limit />
         </el-form-item>
 
         <el-form-item label="描述" prop="description">
@@ -192,9 +192,9 @@
       width="600px"
     >
       <el-table :data="currentMembers" size="small">
-        <el-table-column prop="username" label="用户名"/>
-        <el-table-column prop="nickname" label="昵称"/>
-        <el-table-column prop="email" label="邮箱"/>
+        <el-table-column prop="username" label="用户名" />
+        <el-table-column prop="nickname" label="昵称" />
+        <el-table-column prop="email" label="邮箱" />
       </el-table>
       <div slot="footer">
         <el-button @click="memberListVisible = false">关 闭</el-button>
@@ -206,21 +206,21 @@
 
 <script>
 export default {
-  name: "GroupList",
+  name: 'GroupList',
   data() {
     return {
       loading: false,
       showAdvanced: false,
       searchForm: {
-        groupName: "",
-        description: "",
+        groupName: '',
+        description: '',
         createTime: null
       },
       tableData: [
-        { id: 1, groupName: "管理员组", description: "系统管理员组，拥有全部权限", memberCount: 5, createTime: "2023-04-10 10:00:00" },
-        { id: 2, groupName: "研发组", description: "开发人员组", memberCount: 12, createTime: "2023-05-01 09:00:00" },
-        { id: 3, groupName: "测试组", description: "测试人员组", memberCount: 6, createTime: "2023-06-15 11:30:00" },
-        { id: 4, groupName: "运维组", description: "运维人员组", memberCount: 4, createTime: "2023-07-20 14:00:00" }
+        { id: 1, groupName: '管理员组', description: '系统管理员组，拥有全部权限', memberCount: 5, createTime: '2023-04-10 10:00:00' },
+        { id: 2, groupName: '研发组', description: '开发人员组', memberCount: 12, createTime: '2023-05-01 09:00:00' },
+        { id: 3, groupName: '测试组', description: '测试人员组', memberCount: 6, createTime: '2023-06-15 11:30:00' },
+        { id: 4, groupName: '运维组', description: '运维人员组', memberCount: 4, createTime: '2023-07-20 14:00:00' }
       ],
       pageSize: 10,
       currentPage: 1,
@@ -265,143 +265,143 @@ export default {
       // 查看成员
       memberListVisible: false,
       currentMembers: []
-    };
+    }
   },
   methods: {
     toggleAdvanced() {
-      this.showAdvanced = !this.showAdvanced;
+      this.showAdvanced = !this.showAdvanced
     },
     search() {
-      this.loading = true;
+      this.loading = true
       setTimeout(() => {
-        this.loading = false;
-        this.$message.success("查询成功");
-      }, 500);
+        this.loading = false
+        this.$message.success('查询成功')
+      }, 500)
     },
     reset() {
-      this.searchForm = { groupName: "", description: "", createTime: null };
-      this.search();
+      this.searchForm = { groupName: '', description: '', createTime: null }
+      this.search()
     },
     addGroup() {
-      this.dialogTitle = '新增用户组';
-      this.isEdit = false;
-      this.currentId = null;
-      this.resetForm();
-      this.dialogVisible = true;
+      this.dialogTitle = '新增用户组'
+      this.isEdit = false
+      this.currentId = null
+      this.resetForm()
+      this.dialogVisible = true
     },
     editGroup(row) {
-      this.dialogTitle = '编辑用户组';
-      this.isEdit = true;
-      this.currentId = row.id;
+      this.dialogTitle = '编辑用户组'
+      this.isEdit = true
+      this.currentId = row.id
       this.groupForm = {
         groupName: row.groupName,
         description: row.description || ''
-      };
-      this.dialogVisible = true;
+      }
+      this.dialogVisible = true
     },
     deleteGroup(row) {
-      const index = this.tableData.findIndex(item => item.id === row.id);
+      const index = this.tableData.findIndex(item => item.id === row.id)
       if (index > -1) {
-        this.tableData.splice(index, 1);
-        this.total--;
-        this.$message.success('删除成功');
+        this.tableData.splice(index, 1)
+        this.total--
+        this.$message.success('删除成功')
       }
     },
     batchDelete() {
       this.$confirm(`确定删除选中的 ${this.selectedRows.length} 个用户组吗？`, '提示', {
         type: 'warning'
       }).then(() => {
-        const ids = this.selectedRows.map(row => row.id);
-        this.tableData = this.tableData.filter(item => !ids.includes(item.id));
-        this.total -= ids.length;
-        this.selectedRows = [];
-        this.$message.success('批量删除成功');
-      }).catch(() => {});
+        const ids = this.selectedRows.map(row => row.id)
+        this.tableData = this.tableData.filter(item => !ids.includes(item.id))
+        this.total -= ids.length
+        this.selectedRows = []
+        this.$message.success('批量删除成功')
+      }).catch(() => {})
     },
     viewMembers(row) {
       // 模拟获取成员列表
       this.currentMembers = [
         { username: 'admin', nickname: '管理员', email: 'admin@example.com' },
         { username: 'zhangsan', nickname: '张三', email: 'zhangsan@example.com' }
-      ];
-      this.memberListVisible = true;
+      ]
+      this.memberListVisible = true
     },
     manageMembers(row) {
-      this.currentGroupId = row.id;
+      this.currentGroupId = row.id
       // 模拟已选择的成员
-      this.selectedMembers = [1, 2];
-      this.memberDialogVisible = true;
+      this.selectedMembers = [1, 2]
+      this.memberDialogVisible = true
     },
     filterUser(query, item) {
-      return item.label.indexOf(query) > -1;
+      return item.label.indexOf(query) > -1
     },
     saveMembers() {
-      this.memberLoading = true;
+      this.memberLoading = true
       setTimeout(() => {
-        this.memberLoading = false;
-        this.memberDialogVisible = false;
-        this.$message.success('成员分配成功');
-      }, 800);
+        this.memberLoading = false
+        this.memberDialogVisible = false
+        this.$message.success('成员分配成功')
+      }, 800)
     },
     pageChange(p) {
-      this.currentPage = p;
-      this.search();
+      this.currentPage = p
+      this.search()
     },
     handleSizeChange(size) {
-      this.pageSize = size;
-      this.search();
+      this.pageSize = size
+      this.search()
     },
     handleSelectionChange(selection) {
-      this.selectedRows = selection;
+      this.selectedRows = selection
     },
     tableHeaderStyle() {
-      return { background: "#f5f7fa", fontWeight: "bold", color: "#303133" };
+      return { background: '#f5f7fa', fontWeight: 'bold', color: '#303133' }
     },
     resetForm() {
       this.groupForm = {
         groupName: '',
         description: ''
-      };
+      }
       this.$nextTick(() => {
-        this.$refs.groupForm && this.$refs.groupForm.clearValidate();
-      });
+        this.$refs.groupForm && this.$refs.groupForm.clearValidate()
+      })
     },
     handleDialogClose() {
-      this.resetForm();
+      this.resetForm()
     },
     submitForm() {
       this.$refs.groupForm.validate(valid => {
         if (valid) {
-          this.submitLoading = true;
+          this.submitLoading = true
           setTimeout(() => {
-            this.submitLoading = false;
+            this.submitLoading = false
             if (this.isEdit) {
-              const index = this.tableData.findIndex(item => item.id === this.currentId);
+              const index = this.tableData.findIndex(item => item.id === this.currentId)
               if (index > -1) {
                 this.tableData[index] = {
                   ...this.tableData[index],
                   ...this.groupForm
-                };
+                }
               }
-              this.$message.success('修改成功');
+              this.$message.success('修改成功')
             } else {
               const newGroup = {
                 id: this.tableData.length + 1,
                 ...this.groupForm,
                 memberCount: 0,
                 createTime: new Date().toLocaleString()
-              };
-              this.tableData.unshift(newGroup);
-              this.total++;
-              this.$message.success('新增成功');
+              }
+              this.tableData.unshift(newGroup)
+              this.total++
+              this.$message.success('新增成功')
             }
-            this.dialogVisible = false;
-          }, 800);
+            this.dialogVisible = false
+          }, 800)
         }
-      });
+      })
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -463,8 +463,6 @@ export default {
 
       .add-btn {
         border: none !important;
-        background-color: #409eff20;
-        color: #409eff;
         font-weight: 500;
       }
 
